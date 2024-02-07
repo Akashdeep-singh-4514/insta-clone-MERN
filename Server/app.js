@@ -3,7 +3,7 @@ const http = require("http")
 
 const server = http.createServer((req, res) => {
     console.log("server created");
-    res.end("hello ")
+    res.end("hello ji")
 })
 
 server.listen(5000, "localhost", () => {
