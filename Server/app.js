@@ -1,11 +1,11 @@
-const { log } = require("console");
-const http = require("http")
+const express = require("express")
+const app = express()
+PORT = 5000
 
-const server = http.createServer((req, res) => {
-    console.log("server created");
-    res.end("hello ji")
+app.get("/", (req, res) => {
+    res.json("good afternoon")
 })
 
-server.listen(5000, "localhost", () => {
-    console.log("server at 5000");
+app.listen(PORT, () => {
+    console.log("server at " + PORT);
 })
