@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const mongoUrl = require("./keys.js")
 
 require("./models/model.js")
+app.use(express.json())
 app.use(require("./routes/auth.js"))
 
 
