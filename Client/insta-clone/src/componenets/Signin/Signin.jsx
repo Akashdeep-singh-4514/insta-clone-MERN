@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../partials/Logo.png";
 import { Link } from "react-router-dom";
 
 export default function Signin() {
   const [passVisible, setPassVisible] = useState(false);
+
+  const fetchData = async () => {
+    const response = await fetch("http://localhost:5000/");
+    const data = await response.json();
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
