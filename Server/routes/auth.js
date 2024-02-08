@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 router.post("/signup", (req, res) => {
     const { name, userName, email, password } = req.body
     if (!name || !userName || !email || !password) {
-        res.status(422).json({ error: "please fill all fields" })
+        return res.status(422).json({ error: "please fill all fields" })
     }
     USER.findOne({ $or: [{ email: email }, { userName: userName }] }).then((savedUser) => {
         if (savedUser) {
@@ -21,7 +21,7 @@ router.post("/signup", (req, res) => {
                 name, userName, email, password: hashedPassword
             })
             user.save()
-                .then(user => { res.json({ message: "saved successfully" }) })
+                .then(user => { res.json({ message: "registered successfully" }) })
                 .catch(err => { console.log(err); })
         })
 
