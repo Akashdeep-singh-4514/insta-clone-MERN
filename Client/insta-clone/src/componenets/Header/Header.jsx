@@ -12,7 +12,7 @@ export default function Header() {
           <ul className="list-unstyled flex flex-wrap row ">
             <li className="col-lg-4">
               <Link
-                className="text-decoration-none bg-primary-subtle text-black p-1 rounded-1 "
+                className=" btn text-decoration-none bg-primary-subtle text-black p-1 rounded-1 "
                 to="signup"
               >
                 Sign-up
@@ -21,7 +21,7 @@ export default function Header() {
 
             <li className="col-lg-4 text-decoration-none ">
               <Link
-                className="text-decoration-none bg-primary-subtle text-black p-1 rounded-1 "
+                className=" btn text-decoration-none bg-primary-subtle text-black p-1 rounded-1 "
                 to="signin"
               >
                 Sign-in

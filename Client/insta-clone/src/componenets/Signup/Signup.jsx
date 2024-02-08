@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../partials/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
@@ -11,6 +11,8 @@ export default function Signup() {
   const [userName, setuserName] = useState("");
   const [password, setpassword] = useState("");
   const [message, setmessage] = useState("");
+  const Navigate = useNavigate();
+
   const user = {
     name: name,
     email: email,
@@ -58,6 +60,7 @@ export default function Signup() {
             notifyError(data.error);
           } else if (data.message) {
             notifySuccess(data.message);
+            Navigate("/");
           }
           console.log(data);
         });

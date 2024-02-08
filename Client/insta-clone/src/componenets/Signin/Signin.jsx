@@ -1,19 +1,50 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../partials/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Signin() {
   const [passVisible, setPassVisible] = useState(false);
-
-  const fetchData = async () => {
-    const response = await fetch("http://localhost:5000/");
-    const data = await response.json();
-    console.log(data);
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const notifyError = (msg) => toast.error(msg);
+  const notifySuccess = (msg) => toast.success(msg);
+  const Navigate = useNavigate();
+  const user = {
+    email: email,
+    password: password,
+  };
+  const RegExemail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const validation = () => {
+    if (!RegExemail.test(email)) {
+      notifyError("email is not valid");
+      return false;
+    }
+    return true;
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const handleSubmit = () => {
+    if (validation()) {
+      fetch("http://localhost:5000/signin", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            notifyError(data.error);
+          } else if (data.message) {
+            notifySuccess(data.message);
+            Navigate("/");
+          }
+          console.log(data);
+        });
+    }
+  };
 
   return (
     <>
@@ -30,6 +61,10 @@ export default function Signin() {
                 name="email"
                 id="email"
                 placeholder="E-mail"
+                value={email}
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
                 className="p-1 w-50 my-2 rounded-1 "
               />
             </div>
@@ -39,6 +74,10 @@ export default function Signin() {
                 name="password"
                 id="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => {
+                  setpassword(e.target.value);
+                }}
                 className="p-1 w-50 my-2 rounded-1  "
                 style={{ marginLeft: "5%" }}
               />
@@ -56,7 +95,9 @@ export default function Signin() {
               <button
                 type="submit"
                 onClick={(e) => {
-                  e.preventDefault;
+                  e.preventDefault();
+                  handleSubmit();
+                  console.log(user);
                 }}
                 className="w-50 bg-info rounded-2  text-dark py-1 my-2  "
               >
