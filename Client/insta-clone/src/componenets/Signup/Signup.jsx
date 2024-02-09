@@ -121,7 +121,7 @@ export default function Signup() {
                 type={`${passVisible ? "text" : "password"}`}
                 name="password"
                 id="password"
-                placeholder="Password"
+                placeholder="Create password"
                 value={password}
                 onChange={(e) => {
                   setpassword(e.target.value);
