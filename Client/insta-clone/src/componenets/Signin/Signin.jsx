@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "../../partials/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useUser } from "../../contexts/UserContext";
 
 export default function Signin() {
   const [passVisible, setPassVisible] = useState(false);
@@ -10,10 +11,8 @@ export default function Signin() {
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
   const Navigate = useNavigate();
-  const user = {
-    email: email,
-    password: password,
-  };
+  const { user, setUser } = useUser();
+
   const RegExemail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   const validation = () => {
     if (!RegExemail.test(email)) {
@@ -22,6 +21,13 @@ export default function Signin() {
     }
     return true;
   };
+  useEffect(() => {
+    if (user.loggedIn) {
+      console.log(user);
+
+      Navigate("/");
+    }
+  }, [user]);
 
   const handleSubmit = () => {
     if (validation()) {
@@ -38,10 +44,16 @@ export default function Signin() {
           if (data.error) {
             notifyError(data.error);
           } else if (data.message) {
+            setUser({
+              loggedIn: true,
+              userName: data.userData.userName,
+              email: data.userData.email,
+              token: data.token,
+            });
             notifySuccess(data.message);
-            Navigate("/");
+            // Navigate("/");
           }
-          console.log(data);
+          // console.log(data);
         });
     }
   };
@@ -97,7 +109,6 @@ export default function Signin() {
                 onClick={(e) => {
                   e.preventDefault();
                   handleSubmit();
-                  console.log(user);
                 }}
                 className="w-50 bg-info rounded-2  text-dark py-1 my-2  "
               >

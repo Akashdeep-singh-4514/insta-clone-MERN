@@ -71,7 +71,7 @@ router.post("/signup", (req, res) => {
                             return res.status(422).json({ error: "Error occured" })
                         }
                         const token = jwt.sign({ _id: savedUser._id }, jwt_secret)
-                        return res.status(200).json({ userData: savedUser, message: "signip in successfully", token: token })
+                        return res.status(200).json({ userData: savedUser, message: "signup in successfully", token: token })
                     })
 
                 })

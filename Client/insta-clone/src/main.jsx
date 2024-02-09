@@ -12,13 +12,17 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage.jsx";
-import { Signin, Signup } from "./componenets/index.js";
+import { Home, Signin, Signup } from "./componenets/index.js";
+import App from "./App.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<HomePage />}>
-      <Route path="signin" element={<Signin />} />
-      <Route path="signup" element={<Signup />} />
+    <Route path="/" element={<App />}>
+      <Route path="/" element={<HomePage />}>
+        <Route path="" element={<Home />} />
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
+      </Route>
     </Route>
   )
 );

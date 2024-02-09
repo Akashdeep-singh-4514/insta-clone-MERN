@@ -3,6 +3,7 @@ import Logo from "../../partials/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
+import { useUser } from "../../contexts/UserContext";
 
 export default function Signup() {
   const [passVisible, setPassVisible] = useState(false);
@@ -12,13 +13,8 @@ export default function Signup() {
   const [password, setpassword] = useState("");
   const [message, setmessage] = useState("");
   const Navigate = useNavigate();
+  const { user, setUser } = useUser();
 
-  const user = {
-    name: name,
-    email: email,
-    userName: userName,
-    password: password,
-  };
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
 
@@ -41,6 +37,13 @@ export default function Signup() {
   useEffect(() => {
     setmessage("");
   }, [password]);
+  useEffect(() => {
+    if (user.loggedIn) {
+      console.log(user);
+
+      Navigate("/");
+    }
+  }, [user]);
 
   const handleSubmit = () => {
     if (validation()) {
@@ -59,10 +62,15 @@ export default function Signup() {
           if (data.error) {
             notifyError(data.error);
           } else if (data.message) {
+            setUser({
+              loggedIn: true,
+              userName: data.userData.userName,
+              email: data.userData.email,
+              token: data.token,
+            });
             notifySuccess(data.message);
-            Navigate("/");
           }
-          console.log(data);
+          // console.log(data);
         });
     }
   };
@@ -144,7 +152,7 @@ export default function Signup() {
                 type="submit"
                 onClick={(e) => {
                   e.preventDefault();
-                  console.log(user);
+
                   handleSubmit();
                 }}
                 className="w-50 bg-info rounded-2  text-dark py-1 my-2  "
