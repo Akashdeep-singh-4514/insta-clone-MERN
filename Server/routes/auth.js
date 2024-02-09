@@ -39,7 +39,7 @@ router.post("/signin", (req, res) => {
         bcrypt.compare(password, savedUser.password).then((match) => {
             if (match) {
                 const token = jwt.sign({ _id: savedUser._id }, jwt_secret)
-                return res.status(200).json({ message: "signed in successfully", token: token })
+                return res.status(200).json({ loggedin: true, userData: savedUser, message: "signed in successfully", token: token })
             }
             else {
                 return res.status(422).json({ error: "Invalid password" })
@@ -64,7 +64,7 @@ router.post("/signup", (req, res) => {
                 name, userName, email, password: hashedPassword
             })
             user.save()
-                .then(user => { res.json({ message: "registered successfully" }) })
+                .then(user => { res.json({ loogedin: true, userData: user, message: "registered successfully" }) })
                 .catch(err => { console.log(err); })
         })
 
