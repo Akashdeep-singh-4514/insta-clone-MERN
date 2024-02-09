@@ -5,10 +5,25 @@ const USER = mongoose.model("USER")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { jwt_secret } = require("../keys.js")
-const verification = require("../middleware/requireLogin.js")
 
-router.get("/", verification, (req, res) => {
-    res.send("hello")
+
+router.get("/", (req, res) => {
+    const { authorization } = req.headers
+    if (!authorization) {
+        return res.json({ loggedin: false, userData: null })
+
+    }
+    const token = authorization.replace("Bearer ", "")
+    jwt.verify(token, jwt_secret, (err, payload) => {
+        if (err) {
+            return res.json({ loggedin: false, userData: null })
+        }
+        const { _id } = payload
+        USER.findById(_id).then((userData) => {
+            return res.json({ loggedin: true, userData: userData })
+        })
+    })
+
 })
 router.post("/signin", (req, res) => {
     const { email, password } = req.body
