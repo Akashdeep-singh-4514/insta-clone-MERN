@@ -1,9 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import "./App.css";
 import { UserProvider } from "./contexts/UserContext";
 import { useEffect, useState } from "react";
 import useLocalStorage from "use-local-storage";
 function App() {
+  const Navigate = useNavigate();
   const [user, setuser] = useState({
     loggedIn: false,
     userName: "Instagram_User",
@@ -31,40 +32,43 @@ function App() {
 
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/", {
-  //     method: "get",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data.loggedin);
-  //       setUser({
-  //         loggedIn: data.loggedin,
-  //         userName: data.userData.userName,
-  //         email: data.userData.email,
-  //         token: token,
-  //       });
-  //     });
+  useEffect(() => {
+    if (!token === "") {
+      fetch("http://localhost:5000/", {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data.loggedin);
+          if (data.loggedin) {
+            setUser({
+              loggedIn: data.loggedin,
+              userName: data.userData.userName,
+              email: data.userData.email,
+              token: token,
+            });
+          }
+        });
+    }
+    // console.log(token);
+  }, [token]);
 
-  //   // console.log(token);
-  // }, []);
+  useEffect(() => {
+    if (user.token) {
+      settoken(user.token);
+    }
+    if (user.loggedIn) {
+      // console.log(user);
+    }
 
-  // useEffect(() => {
-  //   if (user.token) {
-  //     settoken(user.token);
-  //   }
-  //   if (user.loggedIn) {
-  //     console.log(user);
-  //   }
-
-  //   if (!user.loggedIn && token === "") {
-  //     Navigate("/signin");
-  //   }
-  // }, [user.loggedIn]);
+    if (!user.loggedIn && token === "") {
+      Navigate("/signin");
+    }
+  }, [user.loggedIn, token]);
 
   return (
     <UserProvider value={{ user, deleteUser, setUser }}>

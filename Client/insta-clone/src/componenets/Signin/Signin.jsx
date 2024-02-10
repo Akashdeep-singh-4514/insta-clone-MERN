@@ -23,7 +23,7 @@ export default function Signin() {
   };
   useEffect(() => {
     if (user.loggedIn) {
-      console.log(user);
+      // console.log(user);
 
       Navigate("/");
     }
