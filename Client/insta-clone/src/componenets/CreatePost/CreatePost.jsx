@@ -5,15 +5,15 @@ import CreatePostForm from "./CreatePostForm";
 
 function CreatePost() {
   const { user } = useUser();
-  const [authStatus, setauthStatus] = useState(false);
+  const [authStatus, setauthStatus] = useState(true);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
-  useEffect(() => {
-    // console.log(user);
-    if (user && user.loggedIn) {
-      setauthStatus(user.loggedIn);
-    } else setauthStatus(false);
-  }, [user, token]);
+  //   useEffect(() => {
+  //     // console.log(user);
+  //     if (user && user.loggedIn) {
+  //       setauthStatus(user.loggedIn);
+  //     } else setauthStatus(false);
+  //   }, [user, token]);
   return (
     <>
       {!authStatus && <p>you're not logged in</p>}
