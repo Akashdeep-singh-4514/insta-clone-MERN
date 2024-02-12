@@ -8,7 +8,7 @@ import useLocalStorage from "use-local-storage";
 
 export default function Header() {
   const { user } = useUser();
-  const [authStatus, setauthStatus] = useState(true);
+  const [authStatus, setauthStatus] = useState(false);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   // useEffect(() => {
@@ -22,7 +22,7 @@ export default function Header() {
     <div className="nav w-100 shadow-sm align-items-center">
       <div className=" ">
         <Link to="/">
-          <img src={Logo} alt="" style={{ width: "150px" }} className="mx-3" />
+          <img src={Logo} alt="" style={{ width: "100px" }} className="mx-3" />
         </Link>
       </div>
       {!authStatus && <ButtonsForUnlogged />}

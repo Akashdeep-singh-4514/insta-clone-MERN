@@ -40,7 +40,7 @@ export default function ButtonsforLoggedin() {
               chat
             </span>
           </Link>{" "}
-          <Link to="">
+          <Link to="createpost">
             <span className=" mx-2 material-symbols-outlined align-items-center text-decoration-none text-black">
               add_box
             </span>
@@ -55,7 +55,7 @@ export default function ButtonsforLoggedin() {
               favorite
             </span>
           </Link>{" "}
-          <Link to="">
+          <Link to="profile">
             <span className=" mx-2 material-symbols-outlined align-items-center text-decoration-none text-black">
               account_circle
             </span>

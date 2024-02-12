@@ -12,7 +12,13 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage.jsx";
-import { Home, Signin, Signup } from "./componenets/index.js";
+import {
+  CreatePost,
+  Home,
+  Profile,
+  Signin,
+  Signup,
+} from "./componenets/index.js";
 import App from "./App.jsx";
 
 const router = createBrowserRouter(
@@ -20,6 +26,8 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route path="/" element={<HomePage />}>
         <Route path="" element={<Home />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="createpost" element={<CreatePost />} />
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
       </Route>

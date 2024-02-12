@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Article from "./Article";
 import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
+import ProfileFrame from "./ProfileFrame";
 
-export default function Home() {
+function Profile() {
   const { user } = useUser();
   const [authStatus, setauthStatus] = useState(false);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
@@ -17,7 +17,9 @@ export default function Home() {
   return (
     <>
       {!authStatus && <p>you're not logged in</p>}
-      {authStatus && <Article />}
+      {authStatus && <ProfileFrame />}
     </>
   );
 }
+
+export default Profile;
