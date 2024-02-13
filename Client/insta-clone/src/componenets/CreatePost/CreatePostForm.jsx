@@ -26,7 +26,7 @@ export default function CreatePostForm() {
         <img
           src=""
           alt=""
-          className="w-25 object-fit-contain m-auto"
+          className="w-50 object-fit-contain m-auto"
           id="preloadImage"
         />
         <textarea

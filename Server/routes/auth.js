@@ -1,28 +1,16 @@
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
-const USER = mongoose.model("USER")
 const bcrypt = require("bcrypt")
+const USER = mongoose.model("USER")
 const jwt = require("jsonwebtoken")
 const { jwt_secret } = require("../keys.js")
+const Logincheck = require("../middleware/Logincheck.js")
+const Post = mongoose.model("Post")
 
+router.get("/", Logincheck, (req, res) => {
 
-router.get("/", (req, res) => {
-    const { authorization } = req.headers
-    if (!authorization) {
-        return res.json({ loggedin: false, userData: null })
-
-    }
-    const token = authorization.replace("Bearer ", "")
-    jwt.verify(token, jwt_secret, (err, payload) => {
-        if (err) {
-            return res.json({ loggedin: false, userData: null })
-        }
-        const { _id } = payload
-        USER.findById(_id).then((userData) => {
-            return res.json({ loggedin: true, userData: userData })
-        })
-    })
+    return res.json({ loggedin: true, userData: req.user })
 
 })
 router.post("/signin", (req, res) => {
@@ -45,7 +33,10 @@ router.post("/signin", (req, res) => {
                 return res.status(422).json({ error: "Invalid password" })
 
             }
-        }).catch(err => { console.log(err); })
+        }).catch(err => {
+            console.log(err);
+            return res.status(400).json({ error: "error occures" })
+        })
     })
 
 
@@ -75,11 +66,31 @@ router.post("/signup", (req, res) => {
                     })
 
                 })
-                .catch(err => { console.log(err); })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(400).json({ error: "error occures" })
+                })
         })
 
     })
 
+
+})
+router.post("/createpost", Logincheck, (req, res) => {
+    const { image, content } = req.body
+    const userId = req.user
+    if (!userId || !image || !content) {
+        return res.status(422).json({ error: "please fill all fields" })
+    }
+    const post = new Post({
+        userId, image, content
+    })
+    post.save().then(result => {
+        return res.status(200).json({ message: "successfully posted" })
+    }).catch(err => {
+        console.log(err);
+        return res.status(400).json({ error: "error occures" })
+    })
 
 })
 
