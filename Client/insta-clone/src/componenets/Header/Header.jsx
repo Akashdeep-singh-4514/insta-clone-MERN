@@ -8,15 +8,15 @@ import useLocalStorage from "use-local-storage";
 
 export default function Header() {
   const { user } = useUser();
-  const [authStatus, setauthStatus] = useState(true);
+  const [authStatus, setauthStatus] = useState(false);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
-  // useEffect(() => {
-  //   // console.log(user);
-  //   if (user && user.loggedIn) {
-  //     setauthStatus(user.loggedIn);
-  //   } else setauthStatus(false);
-  // }, [user, token]);
+  useEffect(() => {
+    // console.log(user);
+    if (user && user.loggedIn) {
+      setauthStatus(user.loggedIn);
+    } else setauthStatus(false);
+  }, [user, token]);
 
   return (
     <div className="nav w-100 shadow-sm align-items-center">

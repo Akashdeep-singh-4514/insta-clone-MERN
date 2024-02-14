@@ -79,6 +79,7 @@ router.post("/signup", (req, res) => {
 router.post("/createpost", Logincheck, (req, res) => {
     const { image, content } = req.body
     const userId = req.user
+    // console.log(userId);
     if (!userId || !image || !content) {
         return res.status(422).json({ error: "please fill all fields" })
     }
@@ -89,7 +90,7 @@ router.post("/createpost", Logincheck, (req, res) => {
         return res.status(200).json({ message: "successfully posted" })
     }).catch(err => {
         console.log(err);
-        return res.status(400).json({ error: "error occures" })
+        return res.status(400).json({ error: "error occured" })
     })
 
 })

@@ -32,43 +32,42 @@ function App() {
 
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
-  // useEffect(() => {
-  //   if (!token === "") {
-  //     fetch("http://localhost:5000/", {
-  //       method: "get",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         // console.log(data.loggedin);
-  //         if (data.loggedin) {
-  //           setUser({
-  //             loggedIn: data.loggedin,
-  //             userName: data.userData.userName,
-  //             email: data.userData.email,
-  //             token: token,
-  //           });
-  //         }
-  //       });
-  //   }
-  //   // console.log(token);
-  // }, [token]);
+  useEffect(() => {
+    if (token) {
+      // console.log("hello");
+      fetch("http://localhost:5000/", {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data);
+          if (data.loggedin) {
+            setUser({
+              loggedIn: data.loggedin,
+              userName: data.userData.userName,
+              email: data.userData.email,
+              token: token,
+            });
+          }
+        });
+    }
+    // console.log(token);
+  }, [token]);
 
-  // useEffect(() => {
-  //   if (user.token) {
-  //     settoken(user.token);
-  //   }
-  //   if (user.loggedIn) {
-  //     // console.log(user);
-  //   }
-
-  //   if (!user.loggedIn && token === "") {
-  //     Navigate("/signin");
-  //   }
-  // }, [user.loggedIn, token]);
+  useEffect(() => {
+    console.log();
+    if (user.token) {
+      settoken(user.token);
+      // console.log(token);
+    }
+    if (!user.loggedIn && token === "") {
+      Navigate("/signin");
+    }
+  }, [user.loggedIn, token]);
 
   return (
     <UserProvider value={{ user, deleteUser, setUser }}>
