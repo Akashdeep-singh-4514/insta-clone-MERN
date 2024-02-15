@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { apikey } from "./keys";
 import useLocalStorage from "use-local-storage";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function CreatePostForm() {
   const [content, setcontent] = useState("");
   const [image, setimage] = useState("");
@@ -9,6 +10,7 @@ export default function CreatePostForm() {
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
+  const Navigate = useNavigate();
   const loadFile = (e) => {
     const output = document.getElementById("preloadImage");
     output.src = URL.createObjectURL(e.target.files[0]);
@@ -19,17 +21,21 @@ export default function CreatePostForm() {
   const sendtoMongo = () => {
     // console.log(content);
     // console.log(image);
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "insta-clone");
-    data.append("cloud_name", "dtx0nm3oa");
-    fetch("https://api.cloudinary.com/v1_1/dtx0nm3oa/image/upload", {
-      method: "Post",
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((da) => setimageurl(da.url))
-      .catch((err) => console.log(err));
+    if (image) {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "insta-clone");
+      data.append("cloud_name", "dtx0nm3oa");
+      fetch("https://api.cloudinary.com/v1_1/dtx0nm3oa/image/upload", {
+        method: "Post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((da) => setimageurl(da.url))
+        .catch((err) => console.log(err));
+    } else {
+      notifyError("add an Image first");
+    }
   };
   useEffect(() => {
     if (imageurl) {
@@ -49,13 +55,8 @@ export default function CreatePostForm() {
           if (data.error) {
             notifyError(data.error);
           } else if (data.message) {
-            setUser({
-              loggedIn: true,
-              userName: data.userData.userName,
-              email: data.userData.email,
-              token: data.token,
-            });
             notifySuccess(data.message);
+            Navigate("/");
           }
         })
         .catch((err) => console.log(err));
