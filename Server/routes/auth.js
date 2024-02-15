@@ -95,4 +95,14 @@ router.post("/createpost", Logincheck, (req, res) => {
 
 })
 
+router.get("/allposts", Logincheck, (req, res) => {
+    Post.find().populate("userId", "_id userName").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+})
+router.get("/myprofile", Logincheck, (req, res) => {
+    Post.find({ userId: req.user._id }).populate("userId", "_id userName").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+})
+router.get("/getuser", Logincheck, (req, res) => {
+    USER.find({ _id: req.user._id }).then(respo => { res.json(respo[0]) }).catch(err => { console.log(err) })
+})
+
 module.exports = router

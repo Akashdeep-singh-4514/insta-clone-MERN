@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import PostsSection from "./PostsSection";
+import { useUser } from "../../contexts/UserContext";
+import useLocalStorage from "use-local-storage";
 
-function ProfileFrame() {
+function ProfileFrame({}) {
+  const { user } = useUser();
+
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
+  const [posts, setposts] = useState([]);
+
+  // console.log(user);
+  useEffect(() => {
+    // console.log(authStatus);
+
+    fetch("http://localhost:5000/myprofile", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((posts) => {
+        setposts(posts);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
       <div className=" justify-content-center row mx-2 mt-5 mb-5">
@@ -18,11 +43,11 @@ function ProfileFrame() {
               className="text-start text-lowercase "
               style={{ width: "50%" }}
             >
-              <h3>Username</h3>
+              <h3>{user.userName ? user.userName : "Instagram User"}</h3>
               <div className="row text-center ">
                 <div className="col-lg-4">
                   <div className="row w-100">
-                    <p className="col-lg-7 fw-medium m-1">0</p>
+                    <p className="col-lg-7 fw-medium m-1">{posts.length}</p>
                     <p className="col-lg-7 text-capitalize fw-medium">posts</p>
                   </div>
                 </div>
@@ -50,20 +75,12 @@ function ProfileFrame() {
         <div className="col-12">
           <div className="col-4 row text-center p-0">
             <span className="material-symbols-outlined  ">post</span>
-            <p className="">Posts</p>
+            <p className="">posts</p>
           </div>
           {/* <div className="col-4"></div>
           <div className="col-4"></div> */}
         </div>
-        <div className="col-12 flex">
-          <div className="col-lg-4">
-            <img
-              src="https://images.unsplash.com/photo-1580164631075-b3f1304f4051?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="post"
-              className="object-fit-contain w-100"
-            />
-          </div>
-        </div>
+        <PostsSection posts={posts} />
       </div>
     </>
   );
