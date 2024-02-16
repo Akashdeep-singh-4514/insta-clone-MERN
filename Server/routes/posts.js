@@ -30,7 +30,7 @@ router.get("/allposts", Logincheck, (req, res) => {
     Post.find().populate("userId", "_id userName").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
 })
 router.get("/myposts", Logincheck, (req, res) => {
-    Post.find({ userId: req.user._id }).populate("userId", "_id userName").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+    Post.find({ userId: req.user._id }).populate("userId", "_id userName followers following").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
 })
 
 

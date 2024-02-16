@@ -12,7 +12,7 @@ function ProfileFrame({}) {
   // console.log(user);
   useEffect(() => {
     // console.log(authStatus);
-
+    // console.log(user);
     fetch("http://localhost:5000/myposts", {
       method: "get",
       headers: {
@@ -34,7 +34,7 @@ function ProfileFrame({}) {
             {/* profile photo */}
             <div className="" style={{ width: "40%" }}>
               <img
-                src="https://images.unsplash.com/photo-1541576980233-97577392db9a?q=80&w=1784&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={user.pfp}
                 alt="pfp"
                 className="w-50 object-fit-contain rounded-circle  "
               />
@@ -53,7 +53,9 @@ function ProfileFrame({}) {
                 </div>
                 <div className="col-lg-4">
                   <div className="row w-100">
-                    <p className="col-lg-7 m-1 fw-medium">0</p>
+                    <p className="col-lg-7 m-1 fw-medium">
+                      {user.followers ? user.followers.length : 0}
+                    </p>
                     <p className="col-lg-7 fw-medium text-capitalize ">
                       followers
                     </p>
@@ -61,7 +63,9 @@ function ProfileFrame({}) {
                 </div>
                 <div className="col-lg-4">
                   <div className="row w-100">
-                    <p className="col-lg-7 fw-medium m-1">0</p>
+                    <p className="col-lg-7 fw-medium m-1">
+                      {user.following ? user.following.length : 0}
+                    </p>
                     <p className="col-lg-7 fw-medium  text-capitalize ">
                       following
                     </p>
