@@ -43,6 +43,7 @@ export default function Home() {
               postUrl={post.image}
               caption={post.content}
               likes={post.likes}
+              pfp={post.userId.pfp}
             />
           ))}
       </div>

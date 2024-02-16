@@ -1,8 +1,6 @@
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
-const bcrypt = require("bcrypt")
-const USER = mongoose.model("USER")
 const jwt = require("jsonwebtoken")
 const { jwt_secret } = require("../keys.js")
 const Logincheck = require("../middleware/Logincheck.js")
@@ -27,7 +25,7 @@ router.post("/createpost", Logincheck, (req, res) => {
 
 })
 router.get("/allposts", Logincheck, (req, res) => {
-    Post.find().populate("userId", "_id userName").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+    Post.find().populate("userId", "_id userName pfp").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
 })
 router.get("/myposts", Logincheck, (req, res) => {
     Post.find({ userId: req.user._id }).populate("userId", "_id userName followers following").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
@@ -57,7 +55,17 @@ router.post("/ifliked", Logincheck, (req, res) => {
 
     })
 })
-
+router.put("/addcomment", Logincheck, (req, res) => {
+    const comment = {
+        comment: req.body.text,
+        userId: req.user._id
+    }
+    Post.findByIdAndUpdate(req.body.postId, {
+        $push: { comments: comment }
+    }, {
+        new: true
+    }).then(respo => { res.json({ message: "success" }) }).catch(err => { console.log(err) })
+})
 
 
 

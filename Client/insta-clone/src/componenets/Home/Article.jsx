@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Article.css";
 import { useUser } from "../../contexts/UserContext";
+import { toast } from "react-toastify";
 export default function Article({
   username = "Instagram user",
   postUrl,
@@ -9,9 +10,13 @@ export default function Article({
   likes,
   postId,
 }) {
+  // console.log(pfp);
   const [likepost, setlikepost] = useState(false);
   const [numlikes, setnumlikes] = useState(likes ? likes.length : 0);
+  const [comment, setcomment] = useState("");
   const { user } = useUser();
+  const notifySuccess = (msg) => toast.success(msg);
+
   useEffect(() => {
     // console.log(likepost);
     fetch("http://localhost:5000/ifliked", {
@@ -69,7 +74,25 @@ export default function Article({
         console.log(err);
       });
   };
+  const addCommet = () => {
+    fetch(`http://localhost:5000/addcomment`, {
+      method: "put",
+      body: JSON.stringify({ postId, text: comment }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
+    setcomment("");
+    notifySuccess("comment posted");
+  };
   return (
     <article className="w-100 d-flex col-12  mt-3 m-auto  justify-content-center">
       <div className="card col-3 " style={{ width: "500px" }}>
@@ -122,10 +145,21 @@ export default function Article({
               id="comment"
               placeholder="Add a comment"
               className="w-75 border-0 p-1"
+              value={comment}
+              onChange={(e) => {
+                setcomment(e.target.value);
+              }}
             />
             <button
               type="button"
-              className="mx-2 border-0 bg-transparent  text-info"
+              className={`mx-2 border-0 rounded-1 ${
+                comment.length > 0
+                  ? "bg-info text-light"
+                  : "bg-transparent text-dark"
+              }`}
+              onClick={() => {
+                addCommet();
+              }}
             >
               Post
             </button>
