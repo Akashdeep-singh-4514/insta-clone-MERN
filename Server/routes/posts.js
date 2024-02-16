@@ -32,6 +32,31 @@ router.get("/allposts", Logincheck, (req, res) => {
 router.get("/myposts", Logincheck, (req, res) => {
     Post.find({ userId: req.user._id }).populate("userId", "_id userName followers following").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
 })
+router.put("/likepost", Logincheck, (req, res) => {
+    Post.findByIdAndUpdate(req.body.postId, {
+        $push: { likes: req.user._id }
+    }, {
+        new: true
+    }).then(respo => { res.json({ message: "success" }) }).catch(err => { console.log(err) })
+})
+router.put("/unlikepost", Logincheck, (req, res) => {
+    Post.findByIdAndUpdate(req.body.postId, {
+        $pull: { likes: req.user._id }
+    }, {
+        new: true
+    }).then(respo => { res.json({ message: "success" }) }).catch(err => { console.log(err) })
+})
+router.post("/ifliked", Logincheck, (req, res) => {
+    Post.findById(req.body.postId).then(post => {
+        if (post.likes) {
+            // console.log(post.likes.indexOf(req.user._id));
+            return res.json({ true: post.likes.indexOf(req.user._id) })
+        } else {
+            return res.json({ false: -1 })
+        }
+
+    })
+})
 
 
 

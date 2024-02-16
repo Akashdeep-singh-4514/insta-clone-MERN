@@ -14,7 +14,7 @@ app.use(require("./routes/posts.js"))
 mongoose.connect(mongoUrl)
 
 mongoose.connection.on("connected", () => {
-    console.log("successfully connected");
+    console.log("mongodb connected");
 })
 mongoose.connection.on("error", () => {
     console.log("not connected to mongodb");

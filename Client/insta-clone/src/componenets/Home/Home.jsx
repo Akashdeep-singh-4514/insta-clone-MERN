@@ -38,9 +38,11 @@ export default function Home() {
           posts.map((post) => (
             <Article
               key={post._id}
+              postId={post._id}
               username={post.userId.userName}
               postUrl={post.image}
-              caption={post.caption}
+              caption={post.content}
+              likes={post.likes}
             />
           ))}
       </div>

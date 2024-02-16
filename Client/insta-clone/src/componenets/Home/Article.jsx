@@ -1,11 +1,75 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import "./Article.css";
+import { useUser } from "../../contexts/UserContext";
 export default function Article({
   username = "Instagram user",
   postUrl,
   pfp = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
   caption,
+  likes,
+  postId,
 }) {
+  const [likepost, setlikepost] = useState(false);
+  const [numlikes, setnumlikes] = useState(likes ? likes.length : 0);
+  const { user } = useUser();
+  useEffect(() => {
+    // console.log(likepost);
+    fetch("http://localhost:5000/ifliked", {
+      method: "post",
+      body: JSON.stringify({ postId }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.true >= 0) {
+          setlikepost(true);
+        } else {
+          setlikepost(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const likePost = () => {
+    setnumlikes(numlikes + 1);
+    fetch(`http://localhost:5000/likepost`, {
+      method: "put",
+      body: JSON.stringify({ postId }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const unlikePost = () => {
+    setnumlikes(numlikes - 1);
+    fetch(`http://localhost:5000/unlikepost`, {
+      method: "put",
+      body: JSON.stringify({ postId }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <article className="w-100 d-flex col-12  mt-3 m-auto  justify-content-center">
       <div className="card col-3 " style={{ width: "500px" }}>
@@ -24,8 +88,31 @@ export default function Article({
           </div>
         </div>
         <div className="card-footer text-start">
-          <span className="material-symbols-outlined">favorite</span>
-          <p className="fw-medium ">1 like</p>
+          {likepost && (
+            <span
+              className={`material-symbols-outlined -red text-danger
+            }`}
+              onClick={() => {
+                setlikepost(false);
+                unlikePost();
+              }}
+            >
+              favorite
+            </span>
+          )}
+          {!likepost && (
+            <span
+              className={`material-symbols-outlined
+            }`}
+              onClick={() => {
+                setlikepost(true);
+                likePost();
+              }}
+            >
+              favorite
+            </span>
+          )}
+          <p className="fw-medium ">{numlikes} like</p>
           <p>{caption}</p>
           <div className="flex nav align-items-center ">
             <span className="material-symbols-outlined mx-2">mood</span>
