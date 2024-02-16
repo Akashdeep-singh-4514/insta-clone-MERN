@@ -68,8 +68,6 @@ export default function Signup() {
               email: data.userData.email,
               token: data.token,
               pfp: data.userData.pfp,
-              followers: data.userData.followers,
-              follwing: data.userData.following,
             });
             notifySuccess(data.message);
           }

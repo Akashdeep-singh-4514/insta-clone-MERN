@@ -8,6 +8,8 @@ function ProfileFrame({}) {
 
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
+  const [followers, setfollowers] = useState([]);
+  const [following, setfollowing] = useState([]);
 
   // console.log(user);
   useEffect(() => {
@@ -23,6 +25,8 @@ function ProfileFrame({}) {
       .then((res) => res.json())
       .then((posts) => {
         setposts(posts);
+        setfollowers(posts[0].userId.followers);
+        setfollowing(posts[0].userId.following);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -53,9 +57,7 @@ function ProfileFrame({}) {
                 </div>
                 <div className="col-lg-4">
                   <div className="row w-100">
-                    <p className="col-lg-7 m-1 fw-medium">
-                      {user.followers ? user.followers.length : 0}
-                    </p>
+                    <p className="col-lg-7 m-1 fw-medium">{followers.length}</p>
                     <p className="col-lg-7 fw-medium text-capitalize ">
                       followers
                     </p>
@@ -63,9 +65,7 @@ function ProfileFrame({}) {
                 </div>
                 <div className="col-lg-4">
                   <div className="row w-100">
-                    <p className="col-lg-7 fw-medium m-1">
-                      {user.following ? user.following.length : 0}
-                    </p>
+                    <p className="col-lg-7 fw-medium m-1">{following.length}</p>
                     <p className="col-lg-7 fw-medium  text-capitalize ">
                       following
                     </p>

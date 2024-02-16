@@ -10,8 +10,7 @@ function App() {
     userName: "Instagram_User",
     email: "example@gmail.com",
     token: "",
-    followers: [],
-    following: [],
+
     pfp: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
   });
   const deleteUser = () => {
@@ -20,8 +19,7 @@ function App() {
       userName: "Instagram_User",
       email: "example@gmail.com",
       token: "",
-      followers: [],
-      following: [],
+
       pfp: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     });
     return true;
@@ -33,8 +31,6 @@ function App() {
       email: client.email,
       token: client.token,
       pfp: client.pfp,
-      followers: client.followers,
-      follwing: client.following,
     });
     return true;
   };
