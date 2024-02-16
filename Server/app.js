@@ -9,7 +9,7 @@ require("./models/model.js")
 require("./models/post.js")
 app.use(express.json())
 app.use(require("./routes/auth.js"))
-
+app.use(require("./routes/posts.js"))
 
 mongoose.connect(mongoUrl)
 

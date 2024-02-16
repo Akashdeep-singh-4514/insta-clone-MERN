@@ -13,7 +13,7 @@ function ProfileFrame({}) {
   useEffect(() => {
     // console.log(authStatus);
 
-    fetch("http://localhost:5000/myprofile", {
+    fetch("http://localhost:5000/myposts", {
       method: "get",
       headers: {
         "Content-Type": "application/json",

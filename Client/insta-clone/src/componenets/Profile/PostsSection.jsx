@@ -5,7 +5,7 @@ function PostsSection({ posts = [] }) {
     <div className="col-12 row flex m-auto ">
       {posts.map((post) => {
         return (
-          <div className="col-lg-3 ">
+          <div key={post._id} className="col-lg-3 ">
             <img
               src={post.image}
               alt="post"
