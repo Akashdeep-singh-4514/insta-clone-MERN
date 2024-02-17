@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     // console.log(authStatus);
     if (authStatus) {
-      fetch("http://localhost:5000/allposts", {
+      fetch("http://localhost:5000/followedposts", {
         method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export default function Home() {
         },
       })
         .then((res) => res.json())
-        .then((posts) => setposts(posts))
+        .then((posts) => setposts(posts.sort((a, b) => b.date - a.date)))
         .catch((err) => console.log(err));
     }
   }, [authStatus]);

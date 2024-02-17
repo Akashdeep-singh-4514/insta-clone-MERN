@@ -7,14 +7,14 @@ const Logincheck = require("../middleware/Logincheck.js")
 const Post = mongoose.model("Post")
 
 router.post("/createpost", Logincheck, (req, res) => {
-    const { image, content } = req.body
+    const { image, content, date } = req.body
     const userId = req.user
     // console.log(userId);
-    if (!userId || !image || !content) {
+    if (!userId || !image || !content || !date) {
         return res.status(422).json({ error: "please fill all fields" })
     }
     const post = new Post({
-        userId, image, content
+        userId, image, content, date
     })
     post.save().then(result => {
         return res.status(200).json({ message: "successfully posted" })
@@ -25,7 +25,29 @@ router.post("/createpost", Logincheck, (req, res) => {
 
 })
 router.get("/allposts", Logincheck, (req, res) => {
-    Post.find().populate("userId", "_id userName pfp").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+    Post.find().populate("userId", "_id userName pfp followers").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+})
+router.get("/followedposts", Logincheck, (req, res) => {
+
+    Post.find().populate("userId", "_id userName pfp followers").then(respo => {
+        var result = []
+        respo.forEach(element => {
+            if (req.user._id.toString() == element.userId._id.toString()) {
+                result = [...result, element]
+            }
+
+            for (let i = 0; i < element.userId.followers.length; i++) {
+                // console.log(element.userId.followers[i].toString() == req.user._id.toString());
+                if (element.userId.followers[i].toString() == req.user._id.toString()) {
+                    result = [...result, element]
+                }
+            }
+
+        })
+        return res.json(result)
+    }).catch(err => {
+        console.log(err)
+    })
 })
 router.get("/myposts", Logincheck, (req, res) => {
     Post.find({ userId: req.user._id }).populate("userId", "_id userName followers following").then(respo => { res.json(respo) }).catch(err => { console.log(err) })

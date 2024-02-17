@@ -39,11 +39,13 @@ export default function CreatePostForm() {
   };
   useEffect(() => {
     if (imageurl) {
+      const date = Date.now();
       fetch("http://localhost:5000/createpost", {
         method: "Post",
         body: JSON.stringify({
           image: imageurl,
           content: content,
+          date: date,
         }),
         headers: {
           "Content-Type": "application/json",

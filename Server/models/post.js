@@ -23,6 +23,10 @@ const postSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
+    },
+    date: {
+        type: Number,
+        required: true
     }
 })
 mongoose.model("Post", postSchema)

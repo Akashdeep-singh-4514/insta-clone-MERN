@@ -8,8 +8,12 @@ function ProfileFrame({}) {
 
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
-  const [followers, setfollowers] = useState([]);
-  const [following, setfollowing] = useState([]);
+  const [followers, setfollowers] = useState(
+    user.followers ? user.followers : []
+  );
+  const [following, setfollowing] = useState(
+    user.following ? user.following : []
+  );
 
   // console.log(user);
   useEffect(() => {
@@ -24,9 +28,7 @@ function ProfileFrame({}) {
     })
       .then((res) => res.json())
       .then((posts) => {
-        setposts(posts);
-        setfollowers(posts[0].userId.followers);
-        setfollowing(posts[0].userId.following);
+        setposts(posts.sort((a, b) => b.date - a.date));
       })
       .catch((err) => console.log(err));
   }, []);

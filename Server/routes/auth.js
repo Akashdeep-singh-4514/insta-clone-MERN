@@ -76,8 +76,6 @@ router.post("/signup", (req, res) => {
 
 
 })
-
-
 router.get("/getuser", Logincheck, (req, res) => {
     USER.find({ _id: req.user._id }).then(respo => { res.json(respo[0]) }).catch(err => { console.log(err) })
 })

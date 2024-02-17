@@ -39,7 +39,7 @@ export default function Signup() {
   }, [password]);
   useEffect(() => {
     if (user.loggedIn) {
-      console.log(user);
+      // console.log(user);
 
       Navigate("/");
     }
