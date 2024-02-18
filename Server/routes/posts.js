@@ -75,18 +75,28 @@ router.post("/ifliked", Logincheck, (req, res) => {
             return res.json({ false: -1 })
         }
 
-    })
+    }).catch(err => { console.log(err); })
 })
 router.put("/addcomment", Logincheck, (req, res) => {
     const comment = {
         comment: req.body.text,
-        userId: req.user._id
+        userId: req.user._id,
+        userName: req.user.userName
     }
     Post.findByIdAndUpdate(req.body.postId, {
         $push: { comments: comment }
     }, {
         new: true
     }).then(respo => { res.json({ message: "success" }) }).catch(err => { console.log(err) })
+})
+
+router.post("/getpost", Logincheck, (req, res) => {
+    Post.findById({ _id: req.body.postId }).populate("userId", "_id userName pfp ").then(post => {
+        if (post.likes) {
+            // console.log(post.likes.indexOf(req.user._id));
+            return res.json({ liked: post.likes.indexOf(req.user._id) >= 0 ? true : false, post })
+        }
+    }).catch(err => { console.log(err); })
 })
 
 

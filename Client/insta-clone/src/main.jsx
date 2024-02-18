@@ -15,6 +15,8 @@ import HomePage from "./Pages/HomePage.jsx";
 import {
   CreatePost,
   Home,
+  PostDetailsh,
+  PostDetailsp,
   Profile,
   Signin,
   Signup,
@@ -30,6 +32,8 @@ const router = createBrowserRouter(
         <Route path="createpost" element={<CreatePost />} />
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="allcomments/:postId" element={<PostDetailsh />} />
+        <Route path="postDetails/:postId" element={<PostDetailsp />} />
       </Route>
     </Route>
   )

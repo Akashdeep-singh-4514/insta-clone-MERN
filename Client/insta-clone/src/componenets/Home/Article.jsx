@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Article.css";
 import { useUser } from "../../contexts/UserContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function Article({
   username = "Instagram user",
   postUrl,
@@ -16,6 +17,7 @@ export default function Article({
   const [comment, setcomment] = useState("");
   const { user } = useUser();
   const notifySuccess = (msg) => toast.success(msg);
+  const Navigate = useNavigate();
 
   useEffect(() => {
     // console.log(likepost);
@@ -94,78 +96,89 @@ export default function Article({
     notifySuccess("comment posted");
   };
   return (
-    <article className="w-100 d-flex col-12  mt-3 m-auto  justify-content-center">
-      <div className="card col-3 " style={{ width: "500px" }}>
-        <div className="card-header nav align-items-center   text-start flex-wrap">
-          <img
-            src={pfp}
-            alt="pfp"
-            width="50px"
-            className="rounded-circle nav-item  "
-          />
-          <h5 className="w-70 mx-2  nav-item  ">{username}</h5>
-        </div>
-        <div className="card-body p-0 ">
-          <div className="card-img  ">
-            <img src={postUrl} alt="post" className="w-100 " />
-          </div>
-        </div>
-        <div className="card-footer text-start">
-          {likepost && (
-            <span
-              className={`material-symbols-outlined -red text-danger
-            }`}
-              onClick={() => {
-                setlikepost(false);
-                unlikePost();
-              }}
-            >
-              favorite
-            </span>
-          )}
-          {!likepost && (
-            <span
-              className={`material-symbols-outlined
-            }`}
-              onClick={() => {
-                setlikepost(true);
-                likePost();
-              }}
-            >
-              favorite
-            </span>
-          )}
-          <p className="fw-medium ">{numlikes} like</p>
-          <p>{caption}</p>
-          <div className="flex nav align-items-center ">
-            <span className="material-symbols-outlined mx-2">mood</span>
-            <input
-              type="text"
-              name="comment"
-              id="comment"
-              placeholder="Add a comment"
-              className="w-75 border-0 p-1"
-              value={comment}
-              onChange={(e) => {
-                setcomment(e.target.value);
-              }}
+    <>
+      <article className="w-100 d-flex col-12  mt-3 m-auto  justify-content-center">
+        <div className="card col-3 " style={{ width: "500px" }}>
+          <div className="card-header nav align-items-center   text-start flex-wrap">
+            <img
+              src={pfp}
+              alt="pfp"
+              width="50px"
+              className="rounded-circle nav-item  "
             />
-            <button
-              type="button"
-              className={`mx-2 border-0 rounded-1 ${
-                comment.length > 0
-                  ? "bg-info text-light"
-                  : "bg-transparent text-dark"
-              }`}
+            <h5 className="w-50 mx-2  nav-item  ">{username}</h5>
+          </div>
+          <div className="card-body p-0 ">
+            <div className="card-img  ">
+              <img src={postUrl} alt="post" className="w-100 " />
+            </div>
+          </div>
+          <div className="card-footer text-start">
+            {likepost && (
+              <span
+                className={`material-symbols-outlined -red text-danger
+            }`}
+                onClick={() => {
+                  setlikepost(false);
+                  unlikePost();
+                }}
+              >
+                favorite
+              </span>
+            )}
+            {!likepost && (
+              <span
+                className={`material-symbols-outlined
+            }`}
+                onClick={() => {
+                  setlikepost(true);
+                  likePost();
+                }}
+              >
+                favorite
+              </span>
+            )}
+            <p className="fw-medium ">{numlikes} like</p>
+            <p>{caption}</p>
+            <p
+              style={{ cursor: "pointer" }}
+              className="fw-medium "
               onClick={() => {
-                addCommet();
+                Navigate(`allcomments/${postId}`);
               }}
             >
-              Post
-            </button>
+              view comments
+            </p>
+            <div className="flex nav align-items-center ">
+              <span className="material-symbols-outlined mx-2">mood</span>
+              <input
+                type="text"
+                name="comment"
+                id="comment"
+                placeholder="Add a comment"
+                className="w-75 border-0 p-1"
+                value={comment}
+                onChange={(e) => {
+                  setcomment(e.target.value);
+                }}
+              />
+              <button
+                type="button"
+                className={`mx-2 border-0 rounded-1 ${
+                  comment.length > 0
+                    ? "bg-info text-light"
+                    : "bg-transparent text-dark"
+                }`}
+                onClick={() => {
+                  addCommet();
+                }}
+              >
+                Post
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </>
   );
 }

@@ -5,9 +5,10 @@ import useLocalStorage from "use-local-storage";
 
 export default function Home() {
   const { user } = useUser();
-  const [authStatus, setauthStatus] = useState(false);
+
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
+  const [authStatus, setauthStatus] = useState(false);
   useEffect(() => {
     // console.log(user);
     if (user && user.loggedIn) {

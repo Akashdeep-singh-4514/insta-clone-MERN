@@ -3,5 +3,8 @@ import Signin from "./Signin/Signin";
 import Signup from "./Signup/Signup";
 import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
+
 import CreatePost from "./CreatePost/CreatePost";
-export { Header, Signin, Signup, Home, Profile, CreatePost };
+import PostDetailsh from "./PostDetails/PostDetailsh";
+import PostDetailsp from "./PostDetails/PostDetailsp";
+export { Header, Signin, Signup, Home, Profile, CreatePost, PostDetailsh, PostDetailsp };
