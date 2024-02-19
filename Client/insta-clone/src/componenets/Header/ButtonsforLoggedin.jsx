@@ -7,8 +7,10 @@ export default function ButtonsforLoggedin() {
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   const handleLogout = () => {
-    settoken("");
-    deleteUser();
+    if (window.confirm("do you really wanna log out?")) {
+      settoken("");
+      deleteUser();
+    }
   };
   // useEffect(() => {
   //   // console.log(user);

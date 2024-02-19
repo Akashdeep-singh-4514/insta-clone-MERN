@@ -9,7 +9,7 @@ function PostDetails({ goback, postId }) {
   const [likes, setlikes] = useState([]);
   const [comments, setcomments] = useState([]);
   const [comment, setcomment] = useState([]);
-
+  const [ownpost, setownpost] = useState(false);
   const [caption, setcaption] = useState("");
   const [postuser, setpostuser] = useState("instagram user");
   const [postUrl, setpostUrl] = useState("");
@@ -21,6 +21,8 @@ function PostDetails({ goback, postId }) {
 
   const { user } = useUser();
   const notifySuccess = (msg) => toast.success(msg);
+  const notifyError = (msg) => toast.error(msg);
+
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -42,10 +44,14 @@ function PostDetails({ goback, postId }) {
         setpostuser(data.post.userId.userName);
         setpostuserpfp(data.post.userId.pfp);
         setpostUrl(data.post.image);
+
         if (data.liked) {
           setlikepost(true);
         } else {
           setlikepost(false);
+        }
+        if (user._id == data.post.userId._id) {
+          setownpost(true);
         }
       })
       .catch((err) => {
@@ -110,6 +116,30 @@ function PostDetails({ goback, postId }) {
     setcomment("");
     notifySuccess("comment posted");
   };
+  const deletePost = () => {
+    if (window.confirm("do you really wanna delete the post")) {
+      fetch(`http://localhost:5000/deletepost/${postId}`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          if (data.message) {
+            notifySuccess(data.message);
+            Navigate(goback);
+          } else if (data.error) {
+            notifyError(data.error);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <>
       <div className="container w-75 my-4  text-start ">
@@ -119,11 +149,11 @@ function PostDetails({ goback, postId }) {
             Navigate(goback);
           }}
         >
-          close
+          west
         </span>
         <div className="row m-auto">
-          <div className="col-6 text-start ">
-            <img src={postUrl} alt="post" className=" w-100" />
+          <div className="col-6 text-start  ">
+            <img src={postUrl} alt="post" className=" m-auto w-100" />
           </div>
           <div className="col-6 card p-0">
             <div className="card-header  nav align-items-center  col-12 text-start flex-wrap">
@@ -134,8 +164,21 @@ function PostDetails({ goback, postId }) {
                 className="rounded-circle    "
               />
               <h5 className="w-50 mx-2  nav-item  ">{postuser}</h5>
+              {ownpost && (
+                <span
+                  onClick={() => {
+                    deletePost();
+                  }}
+                  className="material-symbols-outlined close-btn p-2 rounded-circle text-end"
+                >
+                  delete
+                </span>
+              )}
             </div>
-            <div className="col-12 card-body text-start py-3">
+            <div
+              className="col-12 card-body text-start  py-3"
+              style={{ height: "40vh" }}
+            >
               {comments.map((com) => {
                 // console.log(com);
 

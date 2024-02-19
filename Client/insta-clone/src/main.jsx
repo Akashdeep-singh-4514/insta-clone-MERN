@@ -33,7 +33,7 @@ const router = createBrowserRouter(
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
         <Route path="allcomments/:postId" element={<PostDetailsh />} />
-        <Route path="postDetails/:postId" element={<PostDetailsp />} />
+        <Route path="post/:postId" element={<PostDetailsp />} />
       </Route>
     </Route>
   )

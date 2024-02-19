@@ -68,6 +68,7 @@ export default function Signup() {
               email: data.userData.email,
               token: data.token,
               pfp: data.userData.pfp,
+              _id: data.userData._id,
             });
             notifySuccess(data.message);
           }

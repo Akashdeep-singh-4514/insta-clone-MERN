@@ -89,7 +89,6 @@ router.put("/addcomment", Logincheck, (req, res) => {
         new: true
     }).then(respo => { res.json({ message: "success" }) }).catch(err => { console.log(err) })
 })
-
 router.post("/getpost", Logincheck, (req, res) => {
     Post.findById({ _id: req.body.postId }).populate("userId", "_id userName pfp ").then(post => {
         if (post.likes) {
@@ -97,6 +96,12 @@ router.post("/getpost", Logincheck, (req, res) => {
             return res.json({ liked: post.likes.indexOf(req.user._id) >= 0 ? true : false, post })
         }
     }).catch(err => { console.log(err); })
+})
+
+router.delete("/deletepost/:postId", Logincheck, (req, res) => {
+    Post.findByIdAndDelete({ _id: req.params.postId }).then(post => { res.json({ message: "deleted successfully" }) }).catch(err => console.log(err))
+
+
 })
 
 
