@@ -69,17 +69,16 @@ function ProfileFrame({ ProfileUser }) {
       },
       body: JSON.stringify({ userId: ProfileUser._id }),
     })
-      .then((res) => {
-        if (res.status == 200) {
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
           notifySuccess(`followed ${ProfileUser.userName}`);
+          setfollowed(true);
+        } else if (data.error) {
+          notifyError(data.error);
         }
-        setfollowed(true);
-
-        // res.json();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
   const unfollow = () => {
     fetch(`http://localhost:5000/unfollow`, {
@@ -90,18 +89,16 @@ function ProfileFrame({ ProfileUser }) {
       },
       body: JSON.stringify({ userId: ProfileUser._id }),
     })
-      .then((res) => {
-        // console.log(res);
-        if (res.status == 200) {
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
           notifySuccess(`unfollowed ${ProfileUser.userName}`);
+          setfollowed(false);
+        } else if (data.error) {
+          notifyError(data.error);
         }
-        setfollowed(false);
-
-        // res.json();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
 
   return (
