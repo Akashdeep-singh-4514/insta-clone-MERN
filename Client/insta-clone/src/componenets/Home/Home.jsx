@@ -27,7 +27,10 @@ export default function Home() {
         },
       })
         .then((res) => res.json())
-        .then((posts) => setposts(posts.sort((a, b) => b.date - a.date)))
+        .then((posts) => {
+          setposts(posts.sort((a, b) => b.date - a.date));
+          // console.log(posts[0].userId._id);
+        })
         .catch((err) => console.log(err));
     }
   }, [authStatus]);
@@ -41,6 +44,7 @@ export default function Home() {
               key={post._id}
               postId={post._id}
               username={post.userId.userName}
+              userId={post.userId._id}
               postUrl={post.image}
               caption={post.content}
               likes={post.likes}

@@ -7,4 +7,5 @@ import Profile from "./Profile/Profile";
 import CreatePost from "./CreatePost/CreatePost";
 import PostDetailsh from "./PostDetails/PostDetailsh";
 import PostDetailsp from "./PostDetails/PostDetailsp";
-export { Header, Signin, Signup, Home, Profile, CreatePost, PostDetailsh, PostDetailsp };
+import OtherProfile from "./othersProfile/otherProfile";
+export { Header, Signin, Signup, Home, Profile, CreatePost, PostDetailsh, PostDetailsp, OtherProfile };

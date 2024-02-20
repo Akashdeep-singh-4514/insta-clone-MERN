@@ -17,7 +17,7 @@ function Profile() {
   return (
     <>
       {!authStatus && <p>you're not logged in</p>}
-      {authStatus && <ProfileFrame />}
+      {authStatus && <ProfileFrame ProfileUser={user} currentuser={true} />}
     </>
   );
 }

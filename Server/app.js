@@ -11,6 +11,8 @@ app.use(express.json())
 app.use(require("./routes/auth.js"))
 app.use(require("./routes/posts.js"))
 app.use(require("./routes/follow.js"))
+app.use(require("./routes/user.js"))
+
 
 
 

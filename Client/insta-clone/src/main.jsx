@@ -15,6 +15,7 @@ import HomePage from "./Pages/HomePage.jsx";
 import {
   CreatePost,
   Home,
+  OtherProfile,
   PostDetailsh,
   PostDetailsp,
   Profile,
@@ -22,7 +23,6 @@ import {
   Signup,
 } from "./componenets/index.js";
 import App from "./App.jsx";
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -34,6 +34,7 @@ const router = createBrowserRouter(
         <Route path="signup" element={<Signup />} />
         <Route path="allcomments/:postId" element={<PostDetailsh />} />
         <Route path="post/:postId" element={<PostDetailsp />} />
+        <Route path="user/:userId" element={<OtherProfile />} />
       </Route>
     </Route>
   )

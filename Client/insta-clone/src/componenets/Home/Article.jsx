@@ -10,6 +10,7 @@ export default function Article({
   caption,
   likes,
   postId,
+  userId,
 }) {
   // console.log(pfp);
   const [likepost, setlikepost] = useState(false);
@@ -20,7 +21,7 @@ export default function Article({
   const Navigate = useNavigate();
 
   useEffect(() => {
-    // console.log(likepost);
+    // console.log(userId);
     fetch("http://localhost:5000/ifliked", {
       method: "post",
       body: JSON.stringify({ postId }),
@@ -105,8 +106,19 @@ export default function Article({
               alt="pfp"
               width="50px"
               className="rounded-circle nav-item  "
+              onClick={() => {
+                Navigate(`/user/${userId}`);
+              }}
             />
-            <h5 className="w-50 mx-2  nav-item  ">{username}</h5>
+            <h5
+              className="w-50 mx-2  nav-item "
+              onClick={() => {
+                Navigate(`/user/${userId}`);
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              {username}
+            </h5>
           </div>
           <div className="card-body p-0 ">
             <div className="card-img  ">

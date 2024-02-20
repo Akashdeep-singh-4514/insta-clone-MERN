@@ -162,8 +162,19 @@ function PostDetails({ goback, postId }) {
                 alt="pfp"
                 width="50px"
                 className="rounded-circle    "
+                onClick={() => {
+                  Navigate(`/user/${user._id}`);
+                }}
+                style={{ cursor: "pointer" }}
               />
-              <h5 className="w-50 mx-2  nav-item  ">{postuser}</h5>
+              <h5
+                className="w-50 mx-2  nav-item  "
+                onClick={() => {
+                  Navigate(`/user/${user._id}`);
+                }}
+              >
+                {postuser}
+              </h5>
               {ownpost && (
                 <span
                   onClick={() => {

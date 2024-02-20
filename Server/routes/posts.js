@@ -49,8 +49,8 @@ router.get("/followedposts", Logincheck, (req, res) => {
         console.log(err)
     })
 })
-router.get("/myposts", Logincheck, (req, res) => {
-    Post.find({ userId: req.user._id }).populate("userId", "_id userName followers following").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+router.get("/userposts/:userId", Logincheck, (req, res) => {
+    Post.find({ userId: req.params.userId }).populate("userId", "_id userName ").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
 })
 router.put("/likepost", Logincheck, (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {

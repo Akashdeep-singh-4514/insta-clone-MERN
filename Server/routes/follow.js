@@ -11,19 +11,38 @@ const Post = mongoose.model("Post")
 router.put("/follow", Logincheck, (req, res) => {
     USER.findByIdAndUpdate({ _id: req.body.userId }, {
         $push: { followers: req.user._id }
-    }, {
-        new: true
     }).then(respo => {
-        res.json({ message: "success" })
+        // return res.json({ message: "success" })
     }).catch(err => { console.log(err) })
     USER.findByIdAndUpdate({ _id: req.user._id }, {
         $push: { following: req.body.userId }
-    }, {
-        new: true
     }).then(respo => {
-        // res.json({ message: "success" })
+        return res.json({ message: "success", result: respo })
     }).catch(err => { console.log(err) })
 })
+router.put("/unfollow", Logincheck, (req, res) => {
+    USER.findByIdAndUpdate({ _id: req.body.userId }, {
+        $pull: { followers: req.user._id }
+    }).then(respo => {
+        // return res.json({ message: "success" })
+    }).catch(err => { console.log(err) })
+    USER.findByIdAndUpdate({ _id: req.user._id }, {
+        $pull: { following: req.body.userId }
+    }).then(respo => {
+        return res.json({ message: "success", result: respo })
+    }).catch(err => { console.log(err) })
+})
+router.get("/ifyoufollowed/:userId", Logincheck, (req, res) => {
+    USER.findById({ _id: req.params.userId }).select("-password").then(respo => {
+        var following = false
+        respo.followers.map(follower => {
 
+            if (follower.toString() == req.user._id.toString()) {
+                following = true
+            }
+        });
+        res.json({ following: following })
+    }).catch(err => console.log(err))
+})
 
 module.exports = router
