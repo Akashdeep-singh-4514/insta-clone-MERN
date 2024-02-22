@@ -3,11 +3,15 @@ import PostsSection from "./PostsSection";
 import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
+import "./ProfileFrame.css";
 function ProfileFrame({ ProfileUser }) {
+  const Navigate = useNavigate();
   const { user } = useUser();
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
+  const [changePFP, setchangePFP] = useState(false);
+
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
 
@@ -100,6 +104,26 @@ function ProfileFrame({ ProfileUser }) {
       })
       .catch((err) => console.log(err));
   };
+  const removepfp = () => {
+    fetch("http://localhost:5000/removepfp", {
+      method: "put",
+
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          notifyError(data.error);
+        } else if (data.message) {
+          notifySuccess(data.message);
+          Navigate("/profile");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -107,12 +131,37 @@ function ProfileFrame({ ProfileUser }) {
         <div className="col-12 shadow-sm pb-4 ">
           <div className=" m-auto flex-wrap row w-75">
             {/* profile photo */}
-            <div className="" style={{ width: "40%" }}>
+            <div className="row text-start" style={{ width: "40%" }}>
               <img
+                onClick={() => {
+                  setchangePFP(!changePFP);
+                }}
                 src={ProfileUser.pfp}
                 alt="pfp"
-                className="w-50 object-fit-contain rounded-circle  "
+                className="w-50 thumb-post-img col-lg-12   rounded-circle  "
               />
+              {changePFP && (
+                <p className="col-lg-12 mx-4 mt-2">
+                  <span
+                    onClick={() => {
+                      Navigate("/changepfp");
+                    }}
+                    style={{ cursor: "pointer" }}
+                    className="px-2 mx-1 py-1 text-primary  bg-secondary-subtle rounded"
+                  >
+                    change
+                  </span>
+                  <span
+                    onClick={() => {
+                      removepfp();
+                    }}
+                    style={{ cursor: "pointer" }}
+                    className="px-2 py-1 text-danger  bg-secondary-subtle rounded"
+                  >
+                    remove
+                  </span>{" "}
+                </p>
+              )}
             </div>
             <div
               className="text-start text-lowercase "
@@ -145,14 +194,14 @@ function ProfileFrame({ ProfileUser }) {
                   </div>
                 </div>
                 <div className="  col-lg-4">
-                  {currentuser && (
+                  {/* {currentuser && (
                     <span
                       style={{ cursor: "pointer" }}
                       className={`bg-secondary-subtle fw-medium p-2 rounded-2 `}
                     >
                       editprofile
                     </span>
-                  )}
+                  )} */}
                   {!currentuser && followed && (
                     <span
                       onClick={() => {

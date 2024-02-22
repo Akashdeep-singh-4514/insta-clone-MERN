@@ -14,8 +14,8 @@ module.exports = (req, res, next) => {
             return res.json({ loggedin: false, userData: null, error: "you are not logged in" })
         }
         const { _id } = payload
-        USER.findById(_id).then((userData) => {
-            req.user = userData
+        USER.findById(_id).then((savedUser) => {
+            req.user = { _id: savedUser._id, name: savedUser.name, userName: savedUser.userName, pfp: savedUser.pfp, following: savedUser.following, followers: savedUser.followers, email: savedUser.email }
             next()
         })
     })

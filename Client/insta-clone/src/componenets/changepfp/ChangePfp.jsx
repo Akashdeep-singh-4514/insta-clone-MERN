@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
+import Imageloader from "../CreatePost/imageloader";
 import useLocalStorage from "use-local-storage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Imageloader from "./imageloader";
-export default function CreatePostForm() {
-  const [content, setcontent] = useState("");
-  const [image, setimage] = useState("");
+
+function ChangePfp() {
   const [imageurl, setimageurl] = useState("");
+  const [image, setimage] = useState("");
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
   const Navigate = useNavigate();
-
   const sendtoCloudinary = () => {
     // console.log(content);
     // console.log(image);
@@ -33,13 +32,10 @@ export default function CreatePostForm() {
   };
   useEffect(() => {
     if (imageurl) {
-      const date = Date.now();
-      fetch("http://localhost:5000/createpost", {
-        method: "Post",
+      fetch("http://localhost:5000/changepfp", {
+        method: "put",
         body: JSON.stringify({
           image: imageurl,
-          content: content,
-          date: date,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +48,7 @@ export default function CreatePostForm() {
             notifyError(data.error);
           } else if (data.message) {
             notifySuccess(data.message);
-            Navigate("/");
+            Navigate("/profile");
           }
         })
         .catch((err) => console.log(err));
@@ -62,31 +58,19 @@ export default function CreatePostForm() {
   return (
     <>
       <div className="w-50 m-auto mb-lg-5  row card mt-4 ">
-        {/* <form action=""> */}
         <Imageloader image={image} setimage={setimage} />
-        <textarea
-          name=""
-          id=""
-          cols="30"
-          className="col-12 mt-4"
-          rows="5"
-          placeholder="write a caption..."
-          value={content}
-          onChange={(e) => {
-            setcontent(e.target.value);
-          }}
-        ></textarea>
         <button
-          className="bg-info-subtle h3 mt-3 rounded-2 "
+          className="bg-info-subtle mt-5 "
           onClick={(e) => {
             e.preventDefault();
             sendtoCloudinary();
           }}
         >
-          Share
+          upload
         </button>
-        {/* </form> */}
       </div>
     </>
   );
 }
+
+export default ChangePfp;

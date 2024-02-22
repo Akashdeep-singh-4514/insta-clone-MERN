@@ -3,9 +3,9 @@ import Signin from "./Signin/Signin";
 import Signup from "./Signup/Signup";
 import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
-
+import ChangePfp from "./changepfp/ChangePfp";
 import CreatePost from "./CreatePost/CreatePost";
 import PostDetailsh from "./PostDetails/PostDetailsh";
 import PostDetailsp from "./PostDetails/PostDetailsp";
 import OtherProfile from "./othersProfile/otherProfile";
-export { Header, Signin, Signup, Home, Profile, CreatePost, PostDetailsh, PostDetailsp, OtherProfile };
+export { Header, Signin, Signup, Home, Profile, CreatePost, PostDetailsh, PostDetailsp, ChangePfp, OtherProfile };

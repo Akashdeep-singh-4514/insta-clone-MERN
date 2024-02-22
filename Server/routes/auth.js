@@ -27,7 +27,7 @@ router.post("/signin", (req, res) => {
         bcrypt.compare(password, savedUser.password).then((match) => {
             if (match) {
                 const token = jwt.sign({ _id: savedUser._id }, jwt_secret)
-                return res.status(200).json({ userData: savedUser, message: "signed in successfully", token: token })
+                return res.status(200).json({ userData: { _id: savedUser._id, name: savedUser.name, userName: savedUser.userName, pfp: savedUser.pfp, following: savedUser.following, followers: savedUser.followers, email: savedUser.email }, message: "signed in successfully", token: token })
             }
             else {
                 return res.status(422).json({ error: "Invalid password" })
@@ -62,7 +62,7 @@ router.post("/signup", (req, res) => {
                             return res.status(422).json({ error: "Error occured" })
                         }
                         const token = jwt.sign({ _id: savedUser._id }, jwt_secret)
-                        return res.status(200).json({ userData: savedUser, message: "signup in successfully", token: token })
+                        return res.status(200).json({ userData: { _id: savedUser._id, name: savedUser.name, userName: savedUser.userName, pfp: savedUser.pfp, following: savedUser.following, followers: savedUser.followers, email: savedUser.email }, message: "signup in successfully", token: token })
                     })
 
                 })

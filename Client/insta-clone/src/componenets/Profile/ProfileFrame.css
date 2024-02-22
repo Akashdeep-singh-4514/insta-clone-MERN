@@ -1,0 +1,14 @@
+.thumb-post-img {
+    object-fit: contain; /* keep aspect ratio */
+    width: 100%;
+    max-height: 147px;
+    margin-bottom: 1rem;
+    padding-right: 10px;
+    
+  }
+.box {
+    margin: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }

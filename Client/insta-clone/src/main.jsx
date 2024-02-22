@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage.jsx";
 import {
+  ChangePfp,
   CreatePost,
   Home,
   OtherProfile,
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
         <Route path="createpost" element={<CreatePost />} />
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="changepfp" element={<ChangePfp />} />
         <Route path="allcomments/:postId" element={<PostDetailsh />} />
         <Route path="post/:postId" element={<PostDetailsp />} />
         <Route path="user/:userId" element={<OtherProfile />} />
