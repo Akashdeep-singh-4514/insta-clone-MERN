@@ -18,7 +18,7 @@ router.put("/changepfp", Logincheck, (req, res) => {
 
     }, {
         new: true
-    }).then(respo => { res.json({ message: "success updated,refresh to see change" }) }).catch(err => {
+    }).then(respo => { res.json({ message: "success updated" }) }).catch(err => {
         console.log(err);
         res.json({ error: "error occured" })
     })
@@ -29,7 +29,7 @@ router.put("/removepfp", Logincheck, (req, res) => {
 
     }, {
         new: true
-    }).then(respo => { res.json({ message: "success updated ,refresh to see change" }) }).catch(err => {
+    }).then(respo => { res.json({ message: "success updated " }) }).catch(err => {
         console.log(err);
         res.json({ error: "error occured" })
     })

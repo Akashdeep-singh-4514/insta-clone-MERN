@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PostsSection from "./PostsSection";
 import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
@@ -11,10 +11,11 @@ function ProfileFrame({ ProfileUser }) {
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
   const [changePFP, setchangePFP] = useState(false);
-
+  const [imageurl, setimageurl] = useState("");
+  const [image, setimage] = useState("");
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
-
+  const inputfile = useRef();
   const [followers, setfollowers] = useState(
     ProfileUser.followers ? ProfileUser.followers : []
   );
@@ -119,11 +120,54 @@ function ProfileFrame({ ProfileUser }) {
           notifyError(data.error);
         } else if (data.message) {
           notifySuccess(data.message);
-          Navigate("/profile");
+          window.location.reload();
         }
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    if (image) {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "insta-clone");
+      data.append("cloud_name", "dtx0nm3oa");
+      fetch("https://api.cloudinary.com/v1_1/dtx0nm3oa/image/upload", {
+        method: "Post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((da) => setimageurl(da.url))
+        .catch((err) => console.log(err));
+    } else {
+      notifyError("add an Image first");
+    }
+  }, [image]);
+
+  useEffect(() => {
+    if (imageurl) {
+      fetch("http://localhost:5000/changepfp", {
+        method: "put",
+        body: JSON.stringify({
+          image: imageurl,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            notifyError(data.error);
+          } else if (data.message) {
+            notifySuccess(data.message);
+            window.location.reload();
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [imageurl]);
 
   return (
     <>
@@ -144,13 +188,23 @@ function ProfileFrame({ ProfileUser }) {
                 <p className="col-lg-12 mx-4 mt-2">
                   <span
                     onClick={() => {
-                      Navigate("/changepfp");
+                      inputfile.current.click();
                     }}
                     style={{ cursor: "pointer" }}
                     className="px-2 mx-1 py-1 text-primary  bg-secondary-subtle rounded"
                   >
                     change
                   </span>
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    name=""
+                    id=""
+                    ref={inputfile}
+                    onChange={(e) => {
+                      setimage(e.target.files[0]);
+                    }}
+                  />
                   <span
                     onClick={() => {
                       removepfp();
