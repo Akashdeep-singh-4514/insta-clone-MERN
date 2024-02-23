@@ -137,10 +137,11 @@ function ProfileFrame({ ProfileUser }) {
         body: data,
       })
         .then((res) => res.json())
-        .then((da) => setimageurl(da.url))
+        .then((da) => {
+          setimageurl(da.url);
+          setimage("");
+        })
         .catch((err) => console.log(err));
-    } else {
-      notifyError("add an Image first");
     }
   }, [image]);
 
