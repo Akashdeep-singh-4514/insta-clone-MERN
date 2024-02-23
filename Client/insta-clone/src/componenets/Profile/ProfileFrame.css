@@ -1,10 +1,11 @@
 .thumb-post-img {
     object-fit: contain; /* keep aspect ratio */
-    width: 100%;
+    
     max-height: 147px;
     margin-bottom: 1rem;
     padding-right: 10px;
-    
+    scale: 1;
+    border-radius: 100%;
   }
 .box {
     margin: 5px;

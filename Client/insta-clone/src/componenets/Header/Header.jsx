@@ -22,7 +22,7 @@ export default function Header() {
     <div className="nav w-100 shadow-sm align-items-center">
       <div className=" ">
         <Link to="/">
-          <img src={Logo} alt="" style={{ width: "100px" }} className="mx-3" />
+          <img src={Logo} alt="" style={{ width: "150px" }} className="mx-3" />
         </Link>
       </div>
       {!authStatus && <ButtonsForUnlogged />}

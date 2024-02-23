@@ -13,13 +13,15 @@ import {
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage.jsx";
 import {
-  ChangePfp,
   CreatePost,
+  Explore,
   Home,
   OtherProfile,
+  PostDetailsE,
   PostDetailsh,
   PostDetailsp,
   Profile,
+  SearchResult,
   Signin,
   Signup,
 } from "./componenets/index.js";
@@ -33,10 +35,12 @@ const router = createBrowserRouter(
         <Route path="createpost" element={<CreatePost />} />
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="changepfp" element={<ChangePfp />} />
+        <Route path="explore" element={<Explore />} />
         <Route path="allcomments/:postId" element={<PostDetailsh />} />
         <Route path="post/:postId" element={<PostDetailsp />} />
+        <Route path="posts/:postId" element={<PostDetailsE />} />
         <Route path="user/:userId" element={<OtherProfile />} />
+        <Route path="search/:searchtext" element={<SearchResult />} />
       </Route>
     </Route>
   )

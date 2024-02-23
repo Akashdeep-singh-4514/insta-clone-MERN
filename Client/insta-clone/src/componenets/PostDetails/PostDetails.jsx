@@ -10,6 +10,7 @@ function PostDetails({ goback, postId }) {
   const [comments, setcomments] = useState([]);
   const [comment, setcomment] = useState([]);
   const [ownpost, setownpost] = useState(false);
+  const [currentuserid, setcurrentuserid] = useState("");
   const [caption, setcaption] = useState("");
   const [postuser, setpostuser] = useState("instagram user");
   const [postUrl, setpostUrl] = useState("");
@@ -37,9 +38,11 @@ function PostDetails({ goback, postId }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.post.userId.userName);
+        console.log(data);
         setlikes(data.post.likes);
         setcomments(data.post.comments);
+
+        setcurrentuserid(data.post.userId._id);
         setcaption(data.post.content);
         setpostuser(data.post.userId.userName);
         setpostuserpfp(data.post.userId.pfp);
@@ -156,21 +159,24 @@ function PostDetails({ goback, postId }) {
             <img src={postUrl} alt="post" className=" m-auto w-100" />
           </div>
           <div className="col-6 card p-0">
-            <div className="card-header  nav align-items-center  col-12 text-start flex-wrap">
+            <div
+              style={{ cursor: "pointer" }}
+              className="card-header  nav align-items-center  col-12 text-start flex-wrap"
+            >
               <img
                 src={postuserpfp}
                 alt="pfp"
                 width="50px"
                 className="rounded-circle    "
                 onClick={() => {
-                  Navigate(`/user/${user._id}`);
+                  Navigate(`/user/${currentuserid}`);
                 }}
                 style={{ cursor: "pointer" }}
               />
               <h5
                 className="w-50 mx-2  nav-item  "
                 onClick={() => {
-                  Navigate(`/user/${user._id}`);
+                  Navigate(`/user/${currentuserid}`);
                 }}
               >
                 {postuser}

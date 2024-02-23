@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function PostsSection({ posts = [] }) {
+function PostsSection({ posts = [], url }) {
   // const Navigate = useNavigate();
   // console.log(posts);
   return (
@@ -8,7 +8,7 @@ function PostsSection({ posts = [] }) {
       {posts.map((post) => {
         return (
           <div key={post._id} className="col-lg-3  ">
-            <Link to={`/post/${post._id}`}>
+            <Link to={`/${url}/${post._id}`}>
               <img
                 src={post.image}
                 alt="post"

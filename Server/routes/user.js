@@ -34,4 +34,16 @@ router.put("/removepfp", Logincheck, (req, res) => {
         res.json({ error: "error occured" })
     })
 })
+router.get("/search/:text", Logincheck, (req, res) => {
+    USER.find().select("-password -email -followers -following -__v").then(respo => {
+        var result = []
+        respo.map(client => {
+            if (client.userName.toString().includes(req.params.text) || client.name.toString().includes(req.params.text)) {
+                result = [...result, client]
+            }
+        })
+
+        res.json(result)
+    }).catch(err => { console.log(err) })
+})
 module.exports = router

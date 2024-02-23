@@ -176,16 +176,19 @@ function ProfileFrame({ ProfileUser }) {
         <div className="col-12 shadow-sm pb-4 ">
           <div className=" m-auto flex-wrap row w-75">
             {/* profile photo */}
-            <div className="row text-start" style={{ width: "40%" }}>
+            <div
+              className="row text-start"
+              style={{ width: "400px", height: "200px" }}
+            >
               <img
                 onClick={() => {
                   setchangePFP(!changePFP);
                 }}
                 src={ProfileUser.pfp}
                 alt="pfp"
-                className="w-50 thumb-post-img col-lg-12   rounded-circle  "
+                className="w-50 thumb-post-img col-lg-12 object-fit-cover   "
               />
-              {changePFP && (
+              {currentuser && changePFP && (
                 <p className="col-lg-12 mx-4 mt-2">
                   <span
                     onClick={() => {
@@ -294,7 +297,7 @@ function ProfileFrame({ ProfileUser }) {
           {/* <div className="col-4"></div>
           <div className="col-4"></div> */}
         </div>
-        <PostsSection posts={posts} />
+        <PostsSection posts={posts} url="post" />
       </div>
     </>
   );

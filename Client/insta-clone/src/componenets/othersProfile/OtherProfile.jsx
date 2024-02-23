@@ -45,7 +45,7 @@ function OtherProfile({}) {
       >
         {userId}
       </p> */}
-      {authStatus && profileupdation && (
+      {authStatus && profileupdation && Profileuser && (
         <ProfileFrame ProfileUser={Profileuser} />
       )}
     </div>
