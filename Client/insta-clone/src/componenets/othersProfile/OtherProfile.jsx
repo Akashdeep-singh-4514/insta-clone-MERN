@@ -8,7 +8,7 @@ function OtherProfile({}) {
   const { userId } = useParams();
   const [Profileuser, setProfileuser] = useState({});
   const [profileupdation, setprofileupdation] = useState(false);
-  const [token, settoken] = useLocalStorage("instaCloneToken", "");
+  const [token, settoken] = useLocalStorage("instaClone1Token", "");
   const { user } = useUser();
   const [authStatus, setauthStatus] = useState(false);
 

@@ -46,4 +46,7 @@ router.get("/search/:text", Logincheck, (req, res) => {
         res.json(result)
     }).catch(err => { console.log(err) })
 })
+router.get("/getuser", Logincheck, (req, res) => {
+    USER.findOne({ _id: req.user._id }).select("-password").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+})
 module.exports = router

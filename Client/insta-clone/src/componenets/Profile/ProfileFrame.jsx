@@ -24,8 +24,17 @@ function ProfileFrame({ ProfileUser }) {
   );
   const [currentuser, setcurrentuser] = useState(false);
   const [followed, setfollowed] = useState(false);
+  const [followerslength, setfollowerslength] = useState(
+    ProfileUser.followers ? ProfileUser.followers.length : 0
+  );
 
   // console.log(user);
+  useEffect(() => {
+    if (user._id == ProfileUser._id) {
+      setcurrentuser(true);
+    }
+  }, [changePFP]);
+
   useEffect(() => {
     // console.log(authStatus);
     // console.log("user:", user);
@@ -79,6 +88,7 @@ function ProfileFrame({ ProfileUser }) {
         if (data.message) {
           notifySuccess(`followed ${ProfileUser.userName}`);
           setfollowed(true);
+          setfollowerslength(followerslength + 1);
         } else if (data.error) {
           notifyError(data.error);
         }
@@ -99,6 +109,7 @@ function ProfileFrame({ ProfileUser }) {
         if (data.message) {
           notifySuccess(`unfollowed ${ProfileUser.userName}`);
           setfollowed(false);
+          setfollowerslength(followerslength - 1);
         } else if (data.error) {
           notifyError(data.error);
         }
@@ -184,7 +195,7 @@ function ProfileFrame({ ProfileUser }) {
                 onClick={() => {
                   setchangePFP(!changePFP);
                 }}
-                src={ProfileUser.pfp}
+                src={currentuser ? user.pfp : ProfileUser.pfp}
                 alt="pfp"
                 className="w-50 thumb-post-img col-lg-12 object-fit-cover   "
               />
@@ -237,7 +248,7 @@ function ProfileFrame({ ProfileUser }) {
                 </div>
                 <div className="col-lg-4">
                   <div className="row w-100">
-                    <p className="col-lg-7 m-1 fw-medium">{followers.length}</p>
+                    <p className="col-lg-7 m-1 fw-medium">{followerslength}</p>
                     <p className="col-lg-7 fw-medium text-capitalize ">
                       followers
                     </p>

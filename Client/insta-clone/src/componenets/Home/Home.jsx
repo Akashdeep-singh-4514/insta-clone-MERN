@@ -6,7 +6,7 @@ import useLocalStorage from "use-local-storage";
 export default function Home() {
   const { user } = useUser();
 
-  const [token, settoken] = useLocalStorage("instaCloneToken", "");
+  const [token, settoken] = useLocalStorage("instaClone1Token", "");
   const [posts, setposts] = useState([]);
   const [authStatus, setauthStatus] = useState(false);
   useEffect(() => {

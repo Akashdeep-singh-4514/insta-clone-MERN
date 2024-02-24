@@ -3,7 +3,7 @@ import useLocalStorage from "use-local-storage";
 import PostsSection from "../Profile/PostsSection";
 
 function Explore() {
-  const [token, settoken] = useLocalStorage("instaCloneToken", "");
+  const [token, settoken] = useLocalStorage("instaClone1Token", "");
   const [posts, setposts] = useState([]);
 
   useEffect(() => {
