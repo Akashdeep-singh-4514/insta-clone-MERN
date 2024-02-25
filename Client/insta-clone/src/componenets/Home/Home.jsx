@@ -9,31 +9,50 @@ export default function Home() {
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
   const [authStatus, setauthStatus] = useState(false);
+  let limit = 10;
   useEffect(() => {
     // console.log(user);
     if (user && user.loggedIn) {
       setauthStatus(user.loggedIn);
     } else setauthStatus(false);
   }, [user, token]);
-
+  const getPosts = () => {
+    fetch(`http://localhost:5000/followedposts?limit=${limit}`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        // console.log(result);
+        setposts([...result]);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     // console.log(authStatus);
+
     if (authStatus) {
-      fetch("http://localhost:5000/followedposts", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((posts) => {
-          setposts(posts.sort((a, b) => b.date - a.date));
-          // console.log(posts[0].userId._id);
-        })
-        .catch((err) => console.log(err));
+      getPosts();
+      window.addEventListener("scroll", handlescroll);
+      return () => {
+        window.removeEventListener("scroll", handlescroll);
+      };
     }
   }, [authStatus]);
+
+  const handlescroll = () => {
+    if (
+      document.documentElement.clientHeight + window.pageYOffset >=
+      document.documentElement.scrollHeight
+    ) {
+      limit = limit + 10;
+
+      getPosts();
+    }
+  };
   return (
     <>
       <div className="row">

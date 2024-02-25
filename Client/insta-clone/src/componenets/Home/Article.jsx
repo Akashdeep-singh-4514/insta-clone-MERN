@@ -105,6 +105,7 @@ export default function Article({
               src={pfp}
               alt="pfp"
               width="50px"
+              height="60px"
               className="rounded-circle nav-item  "
               onClick={() => {
                 Navigate(`/user/${userId}`);

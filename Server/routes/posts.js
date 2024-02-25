@@ -25,11 +25,12 @@ router.post("/createpost", Logincheck, (req, res) => {
 
 })
 router.get("/allposts", Logincheck, (req, res) => {
-    Post.find().populate("userId", "_id userName ").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+    let limit = req.query.limit
+    Post.find().sort("-date").limit(parseInt(limit)).populate("userId", "_id userName ").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
 })
 router.get("/followedposts", Logincheck, (req, res) => {
-
-    Post.find().populate("userId", "_id userName pfp followers").then(respo => {
+    let limit = req.query.limit
+    Post.find().sort("-date").limit(parseInt(limit)).populate("userId", "_id userName pfp followers").then(respo => {
         var result = []
         respo.forEach(element => {
             if (req.user._id.toString() == element.userId._id.toString()) {
@@ -50,7 +51,9 @@ router.get("/followedposts", Logincheck, (req, res) => {
     })
 })
 router.get("/userposts/:userId", Logincheck, (req, res) => {
-    Post.find({ userId: req.params.userId }).populate("userId", "_id userName ").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
+    let limit = req.query.limit
+
+    Post.find({ userId: req.params.userId }).sort("-date").limit(parseInt(limit)).populate("userId", "_id userName ").then(respo => { res.json(respo) }).catch(err => { console.log(err) })
 })
 router.put("/likepost", Logincheck, (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {

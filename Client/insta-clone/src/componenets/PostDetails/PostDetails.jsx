@@ -201,7 +201,15 @@ function PostDetails({ goback, postId }) {
 
                 return (
                   <p key={com.userId} className="comment">
-                    <b>{com.userName}</b> {com.comment}
+                    <b
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => {
+                        Navigate(`/user/${com.userId}`);
+                      }}
+                    >
+                      {com.userName}
+                    </b>{" "}
+                    {com.comment}
                   </p>
                 );
               })}

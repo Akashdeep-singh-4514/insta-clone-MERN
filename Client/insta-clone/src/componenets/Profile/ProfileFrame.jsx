@@ -27,22 +27,15 @@ function ProfileFrame({ ProfileUser }) {
   const [followerslength, setfollowerslength] = useState(
     ProfileUser.followers ? ProfileUser.followers.length : 0
   );
-
+  let limit = 10;
   // console.log(user);
   useEffect(() => {
     if (user._id == ProfileUser._id) {
       setcurrentuser(true);
     }
   }, [changePFP]);
-
-  useEffect(() => {
-    // console.log(authStatus);
-    // console.log("user:", user);
-    // console.log("pro:", ProfileUser);
-    if (user._id == ProfileUser._id) {
-      setcurrentuser(true);
-    }
-    fetch(`http://localhost:5000/userposts/${ProfileUser._id}`, {
+  const getPosts = () => {
+    fetch(`http://localhost:5000/userposts/${ProfileUser._id}?limit=${limit}`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -54,6 +47,13 @@ function ProfileFrame({ ProfileUser }) {
         setposts(posts.sort((a, b) => b.date - a.date));
       })
       .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getPosts();
+    window.addEventListener("scroll", handlescroll);
+    return () => {
+      window.removeEventListener("scroll", handlescroll);
+    };
   }, []);
 
   const removepfp = () => {
@@ -120,7 +120,16 @@ function ProfileFrame({ ProfileUser }) {
         .catch((err) => console.log(err));
     }
   }, [imageurl]);
+  const handlescroll = () => {
+    if (
+      document.documentElement.clientHeight + window.pageYOffset >=
+      document.documentElement.scrollHeight
+    ) {
+      limit = limit + 10;
 
+      getPosts();
+    }
+  };
   return (
     <>
       <div className=" justify-content-center row mx-2 mt-5 mb-5">

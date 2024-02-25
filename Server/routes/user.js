@@ -35,7 +35,7 @@ router.put("/removepfp", Logincheck, (req, res) => {
     })
 })
 router.get("/search/:text", Logincheck, (req, res) => {
-    USER.find().select("-password -email -followers -following -__v").then(respo => {
+    USER.find().limit(20).select("-password -email -followers -following -__v").then(respo => {
         var result = []
         respo.map(client => {
             if (client.userName.toString().includes(req.params.text) || client.name.toString().includes(req.params.text)) {

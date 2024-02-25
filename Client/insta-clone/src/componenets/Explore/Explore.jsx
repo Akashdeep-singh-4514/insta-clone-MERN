@@ -5,9 +5,9 @@ import PostsSection from "../Profile/PostsSection";
 function Explore() {
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/allposts`, {
+  let limit = 10;
+  const getPosts = () => {
+    fetch(`http://localhost:5000/allposts?limits${limit}`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,24 @@ function Explore() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  useEffect(() => {
+    getPosts();
+    window.addEventListener("scroll", handlescroll);
+    return () => {
+      window.removeEventListener("scroll", handlescroll);
+    };
   }, []);
+  const handlescroll = () => {
+    if (
+      document.documentElement.clientHeight + window.pageYOffset >=
+      document.documentElement.scrollHeight
+    ) {
+      limit = limit + 10;
+
+      getPosts();
+    }
+  };
 
   return (
     <>
