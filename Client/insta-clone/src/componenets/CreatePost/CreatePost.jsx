@@ -6,7 +6,7 @@ import CreatePostForm from "./CreatePostForm";
 function CreatePost() {
   const { user } = useUser();
   const [authStatus, setauthStatus] = useState(false);
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   useEffect(() => {
     // console.log(user);

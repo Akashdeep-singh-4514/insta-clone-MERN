@@ -4,7 +4,7 @@ import useLocalStorage from "use-local-storage";
 import { Link, useNavigate } from "react-router-dom";
 export default function ButtonsforLoggedin() {
   const { user, deleteUser } = useUser();
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [searchtxt, setsearchtxt] = useState("");
   const Navigate = useNavigate();
   const handleLogout = () => {

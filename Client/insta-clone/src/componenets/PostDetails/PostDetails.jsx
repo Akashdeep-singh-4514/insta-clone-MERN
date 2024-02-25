@@ -18,7 +18,7 @@ function PostDetails({ goback, postId }) {
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
   );
 
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   const { user } = useUser();
   const notifySuccess = (msg) => toast.success(msg);

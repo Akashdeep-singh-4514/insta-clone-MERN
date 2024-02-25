@@ -6,7 +6,7 @@ import useLocalStorage from "use-local-storage";
 
 function PostDetailsh() {
   const { user } = useUser();
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   const [authStatus, setauthStatus] = useState(false);
   useEffect(() => {

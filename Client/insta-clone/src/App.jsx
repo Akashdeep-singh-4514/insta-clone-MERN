@@ -36,7 +36,7 @@ function App() {
     return true;
   };
 
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   useEffect(() => {
     if (token) {
@@ -60,6 +60,9 @@ function App() {
               pfp: data.userData.pfp,
               _id: data.userData._id,
             });
+          }
+          if (data.error) {
+            settoken("");
           }
         });
     }

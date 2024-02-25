@@ -7,7 +7,7 @@ function PostsSection({ posts = [], url }) {
     <div className="col-12 row flex m-auto ">
       {posts.map((post) => {
         return (
-          <div key={post._id} className="col-lg-3  ">
+          <div key={post._id} className="col-3  ">
             <Link to={`/${url}/${post._id}`}>
               <img
                 src={post.image}

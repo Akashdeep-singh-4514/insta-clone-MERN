@@ -9,7 +9,7 @@ import useLocalStorage from "use-local-storage";
 export default function Header() {
   const { user } = useUser();
   const [authStatus, setauthStatus] = useState(false);
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   useEffect(() => {
     // console.log(user);

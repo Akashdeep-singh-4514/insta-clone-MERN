@@ -7,7 +7,7 @@ export default function CreatePostForm() {
   const [content, setcontent] = useState("");
   const [image, setimage] = useState("");
   const [imageurl, setimageurl] = useState("");
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
   const Navigate = useNavigate();

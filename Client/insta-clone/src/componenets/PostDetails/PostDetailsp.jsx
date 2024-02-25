@@ -5,7 +5,7 @@ import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
 function PostDetailsp() {
   const { user } = useUser();
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   const [authStatus, setauthStatus] = useState(false);
   useEffect(() => {

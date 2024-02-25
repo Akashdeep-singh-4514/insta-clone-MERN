@@ -5,6 +5,7 @@ import useLocalStorage from "use-local-storage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./ProfileFrame.css";
+import FollowComponent from "./FollowComponent";
 function ProfileFrame({ ProfileUser }) {
   const Navigate = useNavigate();
   const { user } = useUser();
@@ -23,7 +24,6 @@ function ProfileFrame({ ProfileUser }) {
     ProfileUser.following ? ProfileUser.following : []
   );
   const [currentuser, setcurrentuser] = useState(false);
-  const [followed, setfollowed] = useState(false);
   const [followerslength, setfollowerslength] = useState(
     ProfileUser.followers ? ProfileUser.followers.length : 0
   );
@@ -55,67 +55,7 @@ function ProfileFrame({ ProfileUser }) {
       })
       .catch((err) => console.log(err));
   }, []);
-  useEffect(() => {
-    fetch(`http://localhost:5000/ifyoufollowed/${ProfileUser._id}`, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.following) {
-          setfollowed(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
-  const follow = () => {
-    fetch(`http://localhost:5000/follow`, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ userId: ProfileUser._id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          notifySuccess(`followed ${ProfileUser.userName}`);
-          setfollowed(true);
-          setfollowerslength(followerslength + 1);
-        } else if (data.error) {
-          notifyError(data.error);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-  const unfollow = () => {
-    fetch(`http://localhost:5000/unfollow`, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ userId: ProfileUser._id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          notifySuccess(`unfollowed ${ProfileUser.userName}`);
-          setfollowed(false);
-          setfollowerslength(followerslength - 1);
-        } else if (data.error) {
-          notifyError(data.error);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
   const removepfp = () => {
     fetch("http://localhost:5000/removepfp", {
       method: "put",
@@ -240,13 +180,13 @@ function ProfileFrame({ ProfileUser }) {
                 {ProfileUser.userName ? ProfileUser.userName : "Instagram User"}
               </h3>
               <div className="row text-center ">
-                <div className="col-lg-4">
+                <div className="col-4">
                   <div className="row w-100">
                     <p className="col-lg-7 fw-medium m-1">{posts.length}</p>
                     <p className="col-lg-7 text-capitalize fw-medium">posts</p>
                   </div>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-4">
                   <div className="row w-100">
                     <p className="col-lg-7 m-1 fw-medium">{followerslength}</p>
                     <p className="col-lg-7 fw-medium text-capitalize ">
@@ -254,7 +194,7 @@ function ProfileFrame({ ProfileUser }) {
                     </p>
                   </div>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-4">
                   <div className="row w-100">
                     <p className="col-lg-7 fw-medium m-1">{following.length}</p>
                     <p className="col-lg-7 fw-medium  text-capitalize ">
@@ -271,27 +211,12 @@ function ProfileFrame({ ProfileUser }) {
                       editprofile
                     </span>
                   )} */}
-                  {!currentuser && followed && (
-                    <span
-                      onClick={() => {
-                        unfollow();
-                      }}
-                      style={{ cursor: "pointer" }}
-                      className={`bg-secondary-subtle fw-medium p-2 rounded-2 `}
-                    >
-                      following
-                    </span>
-                  )}
-                  {!currentuser && !followed && (
-                    <span
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        follow();
-                      }}
-                      className={`bg-info-subtle fw-medium p-2 rounded-2 `}
-                    >
-                      follow
-                    </span>
+                  {!currentuser && (
+                    <FollowComponent
+                      ProfileUser={ProfileUser}
+                      followerslength={followerslength}
+                      setfollowerslength={setfollowerslength}
+                    />
                   )}
                 </div>
                 {/* <div className="col-lg-4"></div> */}

@@ -6,7 +6,7 @@ function SearchResult() {
   const { searchtext } = useParams();
   const [users, setusers] = useState([]);
   const [resultfound, setresultfound] = useState(false);
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
   useEffect(() => {
     // console.log(searchtext.length);

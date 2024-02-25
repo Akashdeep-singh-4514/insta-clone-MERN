@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
         USER.findOne({ _id: payload._id }).then((savedUser) => {
             req.user = { _id: savedUser._id, name: savedUser.name, userName: savedUser.userName, pfp: savedUser.pfp, following: savedUser.following, followers: savedUser.followers, email: savedUser.email }
             next()
-        })
+        }).catch(err => res.status(500).json({ error: "error occures" }))
     })
 
 }

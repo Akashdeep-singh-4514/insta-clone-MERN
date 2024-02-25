@@ -6,7 +6,7 @@ import ProfileFrame from "./ProfileFrame";
 function Profile() {
   const { user } = useUser();
   const [authStatus, setauthStatus] = useState(false);
-  const [token, settoken] = useLocalStorage("instaClone1Token", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [prouser, setprouser] = useState(null);
   const [userupdation, setuserupdation] = useState(false);
   useEffect(() => {
