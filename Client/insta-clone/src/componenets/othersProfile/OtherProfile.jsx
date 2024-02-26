@@ -5,7 +5,7 @@ import ProfileFrame from "../Profile/ProfileFrame";
 import { useUser } from "../../contexts/UserContext";
 
 function OtherProfile({}) {
-  const { userId } = useParams();
+  const { userName } = useParams();
   const [Profileuser, setProfileuser] = useState({});
   const [profileupdation, setprofileupdation] = useState(false);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
@@ -20,7 +20,7 @@ function OtherProfile({}) {
   }, [user, token]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${userId}`, {
+    fetch(`http://localhost:5000/user/${userName}`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",

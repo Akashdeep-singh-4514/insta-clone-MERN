@@ -39,7 +39,7 @@ const router = createBrowserRouter(
         <Route path="allcomments/:postId" element={<PostDetailsh />} />
         <Route path="post/:postId" element={<PostDetailsp />} />
         <Route path="posts/:postId" element={<PostDetailsE />} />
-        <Route path="user/:userId" element={<OtherProfile />} />
+        <Route path="user/:userName" element={<OtherProfile />} />
         <Route path="search/:searchtext" element={<SearchResult />} />
       </Route>
     </Route>

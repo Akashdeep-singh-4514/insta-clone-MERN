@@ -169,14 +169,14 @@ function PostDetails({ goback, postId }) {
                 width="50px"
                 className="rounded-circle    "
                 onClick={() => {
-                  Navigate(`/user/${currentuserid}`);
+                  Navigate(`/user/${postuser}`);
                 }}
                 style={{ cursor: "pointer" }}
               />
               <h5
                 className="w-50 mx-2  nav-item  "
                 onClick={() => {
-                  Navigate(`/user/${currentuserid}`);
+                  Navigate(`/user/${postuser}`);
                 }}
               >
                 {postuser}
@@ -204,7 +204,7 @@ function PostDetails({ goback, postId }) {
                     <b
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
-                        Navigate(`/user/${com.userId}`);
+                        Navigate(`/user/${com.userName}`);
                       }}
                     >
                       {com.userName}

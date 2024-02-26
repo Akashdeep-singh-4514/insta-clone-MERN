@@ -42,7 +42,7 @@ function SearchResult() {
             users.map((user) => {
               return (
                 <Link
-                  to={`/user/${user._id}`}
+                  to={`/user/${user.userName}`}
                   key={user._id}
                   className="w-100 text-end text-decoration-none row "
                 >

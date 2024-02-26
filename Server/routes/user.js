@@ -9,8 +9,8 @@ const Logincheck = require("../middleware/Logincheck.js")
 const Post = mongoose.model("Post")
 
 
-router.get("/user/:userId", Logincheck, (req, res) => {
-    USER.findById({ _id: req.params.userId }).select("-password").then(respo => { return res.status(200).json(respo) }).catch(err => { return res.status(404).json({ error: "user not found" }) })
+router.get("/user/:userName", Logincheck, (req, res) => {
+    USER.findOne({ userName: req.params.userName }).select("-password").then(respo => { return res.status(200).json(respo) }).catch(err => { return res.status(404).json({ error: "user not found" }) })
 })
 router.put("/changepfp", Logincheck, (req, res) => {
     USER.findByIdAndUpdate(req.user._id, {
@@ -39,7 +39,9 @@ router.get("/search/:text", Logincheck, (req, res) => {
         var result = []
         respo.map(client => {
             if (client.userName.toString().includes(req.params.text) || client.name.toString().includes(req.params.text)) {
-                result = [...result, client]
+                if (client.userName != req.user.userName) {
+                    result = [...result, client]
+                }
             }
         })
 

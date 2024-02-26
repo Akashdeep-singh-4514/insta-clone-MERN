@@ -108,13 +108,13 @@ export default function Article({
               height="60px"
               className="rounded-circle nav-item  "
               onClick={() => {
-                Navigate(`/user/${userId}`);
+                Navigate(`/user/${username}`);
               }}
             />
             <h5
               className="w-50 mx-2  nav-item "
               onClick={() => {
-                Navigate(`/user/${userId}`);
+                Navigate(`/user/${username}`);
               }}
               style={{ cursor: "pointer" }}
             >
