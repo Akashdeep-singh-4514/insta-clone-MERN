@@ -15,6 +15,8 @@ import HomePage from "./Pages/HomePage.jsx";
 import {
   CreatePost,
   Explore,
+  Followers,
+  Following,
   Home,
   OtherProfile,
   PostDetailsE,
@@ -40,6 +42,9 @@ const router = createBrowserRouter(
         <Route path="post/:postId" element={<PostDetailsp />} />
         <Route path="posts/:postId" element={<PostDetailsE />} />
         <Route path="user/:userName" element={<OtherProfile />} />
+        <Route path="followers/:userName" element={<Followers />} />
+        <Route path="following/:userName" element={<Following />} />
+
         <Route path="search/:searchtext" element={<SearchResult />} />
       </Route>
     </Route>

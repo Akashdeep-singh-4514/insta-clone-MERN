@@ -18,14 +18,14 @@ function ProfileFrame({ ProfileUser }) {
   const notifySuccess = (msg) => toast.success(msg);
   const inputfile = useRef();
   const [followers, setfollowers] = useState(
-    ProfileUser.followers ? ProfileUser.followers : []
+    ProfileUser ? ProfileUser.followers : []
   );
   const [following, setfollowing] = useState(
-    ProfileUser.following ? ProfileUser.following : []
+    ProfileUser ? ProfileUser.following : []
   );
   const [currentuser, setcurrentuser] = useState(false);
   const [followerslength, setfollowerslength] = useState(
-    ProfileUser.followers ? ProfileUser.followers.length : 0
+    ProfileUser ? ProfileUser.followers.length : 0
   );
   let limit = 10;
   // console.log(user);
@@ -185,9 +185,7 @@ function ProfileFrame({ ProfileUser }) {
               className="text-start text-lowercase "
               style={{ width: "50%" }}
             >
-              <h3>
-                {ProfileUser.userName ? ProfileUser.userName : "Instagram User"}
-              </h3>
+              <h3>{ProfileUser ? ProfileUser.userName : "Instagram User"}</h3>
               <div className="row text-center ">
                 <div className="col-4">
                   <div className="row w-100">
@@ -196,7 +194,17 @@ function ProfileFrame({ ProfileUser }) {
                   </div>
                 </div>
                 <div className="col-4">
-                  <div className="row w-100">
+                  <div
+                    className="row w-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      Navigate(
+                        `/followers/${
+                          ProfileUser ? ProfileUser.userName : "Instagram User"
+                        }`
+                      );
+                    }}
+                  >
                     <p className="col-lg-7 m-1 fw-medium">{followerslength}</p>
                     <p className="col-lg-7 fw-medium text-capitalize ">
                       followers
@@ -204,7 +212,17 @@ function ProfileFrame({ ProfileUser }) {
                   </div>
                 </div>
                 <div className="col-4">
-                  <div className="row w-100">
+                  <div
+                    className="row w-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      Navigate(
+                        `/following/${
+                          ProfileUser ? ProfileUser.userName : "Instagram User"
+                        }`
+                      );
+                    }}
+                  >
                     <p className="col-lg-7 fw-medium m-1">{following.length}</p>
                     <p className="col-lg-7 fw-medium  text-capitalize ">
                       following
