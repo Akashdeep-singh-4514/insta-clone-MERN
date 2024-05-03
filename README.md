@@ -1,9 +1,3 @@
-🚀 Exciting News! Just completed my latest project – an Instagram Clone! 📸✨
-
-
-
-I'm thrilled to share that I've successfully replicated key features of Instagram using the MERN stack. 🚀 Here's a quick rundown of what I've accomplished:
-
 
 
 🌐 **Features:**
