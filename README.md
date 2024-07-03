@@ -1,6 +1,6 @@
-My First project with MERN
+## My First project with MERN
 
-🌐 **Features:**
+### 🌐 **Features:**
 
 1. **Sign Up & Sign In:** Seamless user onboarding process.
 
