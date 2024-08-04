@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
-const { jwt_secret } = require("../keys.js")
+const jwt_secret = process.env.JWT_SECRET
 const Logincheck = require("../middleware/Logincheck.js")
 const Post = mongoose.model("Post")
 

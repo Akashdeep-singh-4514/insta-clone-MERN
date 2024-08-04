@@ -1,3 +1,6 @@
 Server/mongopass
+Server/.env
 Server/keys.js
+
+Server/node_modules
 Client/insta-clone/src/componenets/CreatePost/keys.js
