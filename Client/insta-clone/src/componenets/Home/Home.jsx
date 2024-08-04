@@ -6,53 +6,58 @@ import useLocalStorage from "use-local-storage";
 export default function Home() {
   const { user } = useUser();
 
-  const [token, settoken] = useLocalStorage("instaCloneToken", "");
-  const [posts, setposts] = useState([]);
-  const [authStatus, setauthStatus] = useState(false);
+  const [token, setToken] = useLocalStorage("instaCloneToken", "");
+  const [posts, setPosts] = useState([]);
+  const [authStatus, setAuthStatus] = useState(false);
   let limit = 10;
-  useEffect(() => {
-    // console.log(user);
-    if (user && user.loggedIn) {
-      setauthStatus(user.loggedIn);
-    } else setauthStatus(false);
-  }, [user, token]);
-  const getPosts = () => {
-    fetch(`http://localhost:5000/followedposts?limit=${limit}`, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        // console.log(result);
-        setposts([...result]);
-      })
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    // console.log(authStatus);
 
+  useEffect(() => {
+    if (user && user.loggedIn) {
+      setAuthStatus(user.loggedIn);
+    } else {
+      setAuthStatus(false);
+    }
+  }, [user, token]);
+
+  const getPosts = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/followedposts?limit=${limit}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const result = await response.json();
+      setPosts([...result]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     if (authStatus) {
       getPosts();
-      window.addEventListener("scroll", handlescroll);
+      window.addEventListener("scroll", handleScroll);
       return () => {
-        window.removeEventListener("scroll", handlescroll);
+        window.removeEventListener("scroll", handleScroll);
       };
     }
   }, [authStatus]);
 
-  const handlescroll = () => {
+  const handleScroll = () => {
     if (
       document.documentElement.clientHeight + window.pageYOffset >=
       document.documentElement.scrollHeight
     ) {
-      limit = limit + 10;
-
+      limit += 10;
       getPosts();
     }
   };
+
   return (
     <>
       <div className="row">

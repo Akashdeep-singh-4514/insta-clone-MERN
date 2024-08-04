@@ -9,13 +9,16 @@ function FollowComponent({ ProfileUser, followerslength, setfollowerslength }) {
   const notifySuccess = (msg) => toast.success(msg);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/ifyoufollowed/${ProfileUser._id}`, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `https://insta-clone-mern-bakend.onrender.com/ifyoufollowed/${ProfileUser._id}`,
+      {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.following) {
@@ -28,7 +31,7 @@ function FollowComponent({ ProfileUser, followerslength, setfollowerslength }) {
   }, []);
 
   const follow = () => {
-    fetch(`http://localhost:5000/follow`, {
+    fetch(`https://insta-clone-mern-bakend.onrender.com/follow`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +53,7 @@ function FollowComponent({ ProfileUser, followerslength, setfollowerslength }) {
   };
   const unfollow = () => {
     if (window.confirm(`do you wanna unfollow ${ProfileUser.userName}`)) {
-      fetch(`http://localhost:5000/unfollow`, {
+      fetch(`https://insta-clone-mern-bakend.onrender.com/unfollow`, {
         method: "put",
         headers: {
           "Content-Type": "application/json",
