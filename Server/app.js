@@ -11,7 +11,7 @@ const mongoUrl = process.env.MONGO_URL
 // console.log(mongoUrl);
 
 const cors = require("cors")
-app.use(cors("http://localhost:5173/"))
+app.use(cors("https://insta-clone-mern-frontend.onrender.com"))
 require("./models/model.js")
 require("./models/post.js")
 app.use(express.json())

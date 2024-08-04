@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useLocalStorage from "use-local-storage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Imageloader from "./imageloader";
+import Imageloader from "./Imageloader.jsx";
 
 export default function CreatePostForm() {
   const [content, setContent] = useState("");
