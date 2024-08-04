@@ -15,8 +15,12 @@ function ProfileFrame({ ProfileUser }) {
   const [changePFP, setChangePFP] = useState(false);
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
+
   const [followersLength, setFollowersLength] = useState(
     ProfileUser ? ProfileUser.followers.length : 0
+  );
+  const [followingLength, setFollowingLength] = useState(
+    ProfileUser ? ProfileUser.following.length : 0
   );
   const [currentUser, setCurrentUser] = useState(false);
   const inputFile = useRef();
@@ -237,7 +241,7 @@ function ProfileFrame({ ProfileUser }) {
                     )
                   }
                 >
-                  <p className="col-lg-7 fw-medium m-1">{following.length}</p>
+                  <p className="col-lg-7 fw-medium m-1">{followingLength}</p>
                   <p className="col-lg-7 fw-medium text-capitalize">
                     following
                   </p>
