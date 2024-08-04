@@ -22,7 +22,7 @@ export default function Home() {
   const getPosts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/followedposts?limit=${limit}`,
+        `https://insta-clone-mern-bakend.onrender.com/followedposts?limit=${limit}`,
         {
           method: "GET",
           headers: {

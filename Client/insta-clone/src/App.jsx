@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     if (token) {
       // console.log("hello");
-      fetch("http://localhost:5000/", {
+      fetch("https://insta-clone-mern-bakend.onrender.com/", {
         method: "get",
         headers: {
           "Content-Type": "application/json",
