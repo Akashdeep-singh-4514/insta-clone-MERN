@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
 import CreatePostForm from "./CreatePostForm";
+import { useNavigate } from "react-router-dom";
 
 function CreatePost() {
   const { user } = useUser();
+  const Navigate = useNavigate();
   const [authStatus, setauthStatus] = useState(false);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
 
@@ -12,7 +14,11 @@ function CreatePost() {
     // console.log(user);
     if (user && user.loggedIn) {
       setauthStatus(user.loggedIn);
-    } else setauthStatus(false);
+    } else {
+      Navigate("/signin");
+      settoken("");
+      setauthStatus(false);
+    }
   }, [user, token]);
   return (
     <>

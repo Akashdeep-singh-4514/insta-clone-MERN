@@ -35,7 +35,11 @@ function Profile() {
         }
 
         const data = await response.json();
+        // console.log(data);s
+
         setProfileUser(data);
+        // console.log(profileUser);
+
         setUserUpdated(true);
       } catch (error) {
         console.error("Error fetching user profile:", error);

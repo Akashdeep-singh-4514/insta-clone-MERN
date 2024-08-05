@@ -41,6 +41,7 @@ function PostDetails({ goback, postId }) {
           }
         );
         const data = await response.json();
+        // console.log(data.post.userId.userName);
 
         setLikes(data.post.likes);
         setComments(data.post.comments);

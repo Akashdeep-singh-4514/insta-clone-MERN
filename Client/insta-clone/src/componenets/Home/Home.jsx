@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import Article from "./Article";
 import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const { user } = useUser();
+  const Navigate = useNavigate();
 
-  const [token, setToken] = useLocalStorage("instaCloneToken", "");
+  const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setPosts] = useState([]);
   const [authStatus, setAuthStatus] = useState(false);
   let limit = 10;
@@ -15,6 +17,8 @@ export default function Home() {
     if (user && user.loggedIn) {
       setAuthStatus(user.loggedIn);
     } else {
+      Navigate("/signin");
+      settoken("");
       setAuthStatus(false);
     }
   }, [user, token]);

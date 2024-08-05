@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import PostDetails from "./PostDetails";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
 
 function PostDetailsh() {
   const { user } = useUser();
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
+  const Navigate = useNavigate();
 
   const [authStatus, setauthStatus] = useState(false);
   useEffect(() => {
     // console.log(user);
     if (user && user.loggedIn) {
       setauthStatus(user.loggedIn);
-    } else setauthStatus(false);
+    } else {
+      Navigate("/signin");
+      settoken("");
+      setauthStatus(false);
+    }
   }, [user, token]);
 
   const params = useParams();
