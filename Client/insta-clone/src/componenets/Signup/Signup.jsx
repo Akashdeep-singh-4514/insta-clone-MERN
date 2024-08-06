@@ -49,7 +49,7 @@ export default function Signup() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "https://insSta-clone-mern-bakend.onrender.com/signup",
+          "https://insta-clone-mern-bakend.onrender.com/signup",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
