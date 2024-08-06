@@ -69,7 +69,7 @@ export default function Home() {
     <>
       <div className="row">
         {loading && <p>loading</p>}
-        {!loading && authStatus && <p>no posts for you, go to explore</p>}
+        {/* {!loading && authStatus && <p>no posts for you, go to explore</p>} */}
 
         {!loading && !authStatus && <p>you're not logged in</p>}
         {authStatus &&
