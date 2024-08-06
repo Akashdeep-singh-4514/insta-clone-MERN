@@ -13,6 +13,7 @@ export default function Signup() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { user, setUser } = useUser();
+  const [loading, setloading] = useState(false);
 
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
@@ -45,6 +46,7 @@ export default function Signup() {
   }, [user, navigate]);
 
   const handleSubmit = async (event) => {
+    setloading(true);
     event.preventDefault();
     if (validateForm()) {
       try {
@@ -81,6 +83,8 @@ export default function Signup() {
       } catch (error) {
         notifyError("An error occurred. Please try again.");
         console.error("Signup error:", error);
+      } finally {
+        setloading(false);
       }
     }
   };
@@ -150,12 +154,13 @@ export default function Signup() {
               type="submit"
               className="w-50 bg-info rounded-2 text-dark py-1"
             >
-              Signup
+              {loading && <>loading</>}
+              {!loading && <>Signup</>}
             </button>
             <p className="mt-2">
               Already have an account?{" "}
               <Link className="text-decoration-none" to="/signin">
-                Sign in
+                sign in
               </Link>
             </p>
             {message && <p style={{ color: "red" }}>{message}</p>}

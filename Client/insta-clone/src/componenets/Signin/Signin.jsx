@@ -12,6 +12,7 @@ export default function Signin() {
   const notifySuccess = (msg) => toast.success(msg);
   const navigate = useNavigate();
   const { user, setUser } = useUser();
+  const [loading, setloading] = useState(false);
 
   const RegExemail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
@@ -31,6 +32,7 @@ export default function Signin() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setloading(true);
     if (validateForm()) {
       try {
         const response = await fetch(
@@ -60,6 +62,8 @@ export default function Signin() {
       } catch (error) {
         notifyError("An error occurred. Please try again.");
         console.error("Signin error:", error);
+      } finally {
+        setloading(false);
       }
     }
   };
@@ -107,7 +111,8 @@ export default function Signin() {
               type="submit"
               className="w-50 bg-info rounded-2 text-dark py-1"
             >
-              Login
+              {loading && <>loading</>}
+              {!loading && <>login</>}
             </button>
             <p className="mt-2">
               Don't have an account?{" "}

@@ -131,8 +131,8 @@ export default function Article({
             {likePost ? (
               <span
                 className={`material-symbols-outlined ${
-                  likePost ? "-red" : ""
-                }  text-dange`}
+                  likePost ? "-red text-danger" : ""
+                }  `}
                 onClick={() => {
                   setLikePost(false);
                   unlikePostHandler();
