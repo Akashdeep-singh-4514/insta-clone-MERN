@@ -207,7 +207,12 @@ function PostDetails({ goback, postId }) {
                 favorite
               </span>
             ) : (
-              <span className="material-symbols-outlined" onClick={likePost}>
+              <span
+                className={`material-symbols-outlined ${
+                  likePost ? "-red text-danger" : ""
+                }  `}
+                onClick={likePost}
+              >
                 favorite
               </span>
             )}
