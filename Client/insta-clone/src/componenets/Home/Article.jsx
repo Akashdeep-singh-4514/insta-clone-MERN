@@ -130,7 +130,9 @@ export default function Article({
           <div className="card-footer text-start">
             {likePost ? (
               <span
-                className="material-symbols-outlined -red text-danger"
+                className={`${
+                  likePost ? "-red" : "material-symbols-outlined"
+                }  text-dange`}
                 onClick={() => {
                   setLikePost(false);
                   unlikePostHandler();
