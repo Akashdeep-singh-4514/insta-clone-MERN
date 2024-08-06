@@ -47,7 +47,7 @@ function Explore() {
   return (
     <div className="container mt-3">
       {!posts.length > 0 ? (
-        <p>no posts</p>
+        <p>loading</p>
       ) : (
         <PostsSection url="posts" posts={posts} />
       )}

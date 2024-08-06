@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const { user } = useUser();
   const Navigate = useNavigate();
-
+  const [loading, setloading] = useState(false);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setPosts] = useState([]);
   const [authStatus, setAuthStatus] = useState(false);
@@ -24,6 +24,7 @@ export default function Home() {
   }, [user, token]);
 
   const getPosts = async () => {
+    setloading(true);
     try {
       const response = await fetch(
         `https://insta-clone-mern-bakend.onrender.com/followedposts?limit=${limit}`,
@@ -39,6 +40,8 @@ export default function Home() {
       setPosts([...result]);
     } catch (error) {
       console.error(error);
+    } finally {
+      setloading(false);
     }
   };
 
@@ -65,7 +68,10 @@ export default function Home() {
   return (
     <>
       <div className="row">
-        {!authStatus && <p>you're not logged in</p>}
+        {loading && <p>loading</p>}
+        {!loading && authStatus && <p>no posts for you, go to explore</p>}
+
+        {!loading && !authStatus && <p>you're not logged in</p>}
         {authStatus &&
           posts.map((post) => (
             <Article
