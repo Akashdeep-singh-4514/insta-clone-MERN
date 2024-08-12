@@ -201,18 +201,13 @@ function PostDetails({ goback, postId }) {
           <div className="card-footer text-start">
             {isPostLiked ? (
               <span
-                className="material-symbols-outlined text-danger"
+                className="material-symbols-outlined -red text-danger"
                 onClick={unlikePost}
               >
                 favorite
               </span>
             ) : (
-              <span
-                className={`material-symbols-outlined ${
-                  likePost ? "-red text-danger" : ""
-                }  `}
-                onClick={likePost}
-              >
+              <span className={`material-symbols-outlined `} onClick={likePost}>
                 favorite
               </span>
             )}
