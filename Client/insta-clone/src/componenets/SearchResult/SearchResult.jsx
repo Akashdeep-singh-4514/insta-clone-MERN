@@ -31,6 +31,8 @@ function SearchResult() {
           }
           const data = await response.json();
           setUsers(data);
+          console.log(data);
+
           setResultFound(data.length > 0);
         } catch (err) {
           console.error("Error fetching users:", err);
