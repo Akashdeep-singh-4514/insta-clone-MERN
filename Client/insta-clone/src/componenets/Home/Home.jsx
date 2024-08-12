@@ -17,7 +17,7 @@ export default function Home() {
     if (user && user.loggedIn) {
       setAuthStatus(user.loggedIn);
     } else {
-      Navigate("/signin");
+      Navigate("/");
       settoken("");
       setAuthStatus(false);
     }

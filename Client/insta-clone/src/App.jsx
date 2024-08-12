@@ -76,7 +76,7 @@ function App() {
       // console.log(token);
     }
     if (!user.loggedIn && token === "") {
-      Navigate("/signin");
+      Navigate("/");
     }
   }, [user.loggedIn, token]);
 

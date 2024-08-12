@@ -15,7 +15,7 @@ function CreatePost() {
     if (user && user.loggedIn) {
       setauthStatus(user.loggedIn);
     } else {
-      Navigate("/signin");
+      Navigate("/");
       settoken("");
       setauthStatus(false);
     }
