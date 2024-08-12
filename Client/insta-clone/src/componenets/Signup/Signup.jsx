@@ -150,13 +150,16 @@ export default function Signup() {
             </button>
           </div>
           <div className="my-2">
-            <button
-              type="submit"
-              className="w-50 bg-info rounded-2 text-dark py-1"
-            >
-              {loading && <>loading</>}
-              {!loading && <>Signup</>}
-            </button>
+            {!loading && (
+              <button
+                type="submit"
+                className="w-50 bg-info rounded-2 text-dark py-1"
+              >
+                {<>Signup</>}
+              </button>
+            )}
+            {loading && <>Loading</>}
+
             <p className="mt-2">
               Already have an account?{" "}
               <Link className="text-decoration-none" to="/signin">

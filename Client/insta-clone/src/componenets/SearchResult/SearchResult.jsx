@@ -31,7 +31,7 @@ function SearchResult() {
           }
           const data = await response.json();
           setUsers(data);
-          console.log(data);
+          // console.log();
 
           setResultFound(data.length > 0);
         } catch (err) {
