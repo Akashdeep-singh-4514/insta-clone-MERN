@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "../componenets";
 import { Outlet, useNavigate } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
+import { useUser } from "../contexts/UserContext";
 
 export default function HomePage() {
   const { user } = useUser();
