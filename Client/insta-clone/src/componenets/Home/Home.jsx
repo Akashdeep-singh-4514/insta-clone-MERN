@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Article from "./Article";
-import { useUser } from "../../contexts/UserContext";
 import useLocalStorage from "use-local-storage";
-import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const { user } = useUser();
-  const Navigate = useNavigate();
-  const [loading, setloading] = useState(false);
-  const [token, settoken] = useLocalStorage("instaCloneToken", "");
+  const [loading, setLoading] = useState(true); // Start with loading true
+  const [token] = useLocalStorage("instaCloneToken", "");
   const [posts, setPosts] = useState([]);
-  const [authStatus, setAuthStatus] = useState(false);
   let limit = 10;
-
   useEffect(() => {
-    if (user && user.loggedIn) {
-      setAuthStatus(user.loggedIn);
-    } else {
-      Navigate("/");
-      settoken("");
-      setAuthStatus(false);
-    }
-  }, [user, token]);
-
+    if (token) getPosts();
+  }, [token]);
   const getPosts = async () => {
-    setloading(true);
+    // //console.log("Fetching posts...");
+    // //console.log(token);
+
     try {
       const response = await fetch(
         `https://insta-clone-mern-bakend.onrender.com/followedposts?limit=${limit}`,
@@ -36,56 +25,70 @@ export default function Home() {
           },
         }
       );
+
       const result = await response.json();
-      setPosts([...result]);
+      //console.log("Fetched posts:", result);
+
+      if (result.length > 0) {
+        setPosts((prevPosts) => {
+          // Filter out any posts that already exist in the state
+          const newPosts = result.filter(
+            (post) => !prevPosts.some((p) => p._id === post._id)
+          );
+          return [...prevPosts, ...newPosts];
+        });
+      } else {
+        console.log("No more posts to fetch.");
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch posts:", error);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (authStatus) {
-      getPosts();
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }
-  }, [authStatus]);
+    getPosts();
+    const handleScroll = () => {
+      if (
+        document.documentElement.clientHeight + window.pageYOffset >=
+        document.documentElement.scrollHeight
+      ) {
+        limit += 10;
+        getPosts();
+      }
+    };
 
-  const handleScroll = () => {
-    if (
-      document.documentElement.clientHeight + window.pageYOffset >=
-      document.documentElement.scrollHeight
-    ) {
-      limit += 10;
-      getPosts();
-    }
-  };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Empty dependency array ensures it runs once on mount
 
   return (
-    <>
-      <div className="row">
-        {loading && <p>loading</p>}
-        {/* {!loading && authStatus && <p></p>} */}
-
-        {!loading && !authStatus && <p>no posts for you, go to explore</p>}
-        {authStatus &&
-          posts.map((post) => (
-            <Article
-              key={post._id}
-              postId={post._id}
-              username={post.userId.userName}
-              userId={post.userId._id}
-              postUrl={post.image}
-              caption={post.content}
-              likes={post.likes}
-              pfp={post.userId.pfp}
-            />
-          ))}
-      </div>
-    </>
+    <div className="row">
+      {loading ? (
+        <p>Loading...</p>
+      ) : posts.length === 0 ? (
+        <p>
+          No posts available. You haven't followed anyone yet. Explore to find
+          interesting content!
+        </p>
+      ) : (
+        posts.map((post) => (
+          <Article
+            key={post._id}
+            postId={post._id}
+            username={post.userId.userName}
+            userId={post.userId._id}
+            postUrl={post.image}
+            caption={post.content}
+            likes={post.likes}
+            pfp={post.userId.pfp}
+          />
+        ))
+      )}
+    </div>
   );
 }

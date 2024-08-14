@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUser } from "../../contexts/UserContext";
 
-export default function Signin() {
+export default function Signin({ sethasAccount }) {
   const [passVisible, setPassVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -118,7 +118,13 @@ export default function Signin() {
             {loading && <>Loading</>}
             <p className="mt-2">
               Don't have an account?{" "}
-              <Link className="text-decoration-none" to="/signup">
+              <Link
+                onClick={() => {
+                  // sethasAccount(false);
+                }}
+                className="text-decoration-none"
+                to="/signup"
+              >
                 Sign up
               </Link>
             </p>

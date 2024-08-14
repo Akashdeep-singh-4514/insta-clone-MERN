@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUser } from "../../contexts/UserContext";
 
-export default function Signup() {
+export default function Signup({ sethasAccount }) {
   const [passVisible, setPassVisible] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -162,7 +162,13 @@ export default function Signup() {
 
             <p className="mt-2">
               Already have an account?{" "}
-              <Link className="text-decoration-none" to="/signin">
+              <Link
+                onClick={() => {
+                  // sethasAccount(true);
+                }}
+                className="text-decoration-none"
+                to="/signin"
+              >
                 sign in
               </Link>
             </p>

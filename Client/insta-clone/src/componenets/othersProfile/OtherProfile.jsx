@@ -10,24 +10,25 @@ function OtherProfile() {
   const [profileUpdated, setProfileUpdated] = useState(false);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const { user } = useUser();
-  const [authStatus, setAuthStatus] = useState(false);
+  // const [user.loggedIn, setuser.loggedIn] = useState(false);
   const Navigate = useNavigate();
 
-  useEffect(() => {
-    if (user && user.loggedIn) {
-      setAuthStatus(user.loggedIn);
-    } else {
-      Navigate("/");
-      settoken("");
-      setAuthStatus(false);
-    }
-  }, [user, token]);
+  // useEffect(() => {
+  //   if (user && user.loggedIn) {
+  //     setuser.loggedIn(user.loggedIn);
+  //   } else {
+  //     Navigate("/");
+  //     settoken("");
+  //     setuser.loggedIn(false);
+  //   }
+  // }, [user, token]);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await fetch(
           `https://insta-clone-mern-bakend.onrender.com/user/${userName}`,
+
           {
             method: "GET",
             headers: {
@@ -37,7 +38,7 @@ function OtherProfile() {
           }
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         setProfileUser(data);
         setProfileUpdated(true);
@@ -46,14 +47,14 @@ function OtherProfile() {
       }
     };
 
-    if (authStatus) {
+    if (user.loggedIn) {
       fetchProfile();
     }
-  }, [userName, token, authStatus]);
+  }, [userName, token, user.loggedIn]);
 
   return (
     <div>
-      {authStatus && profileUpdated && profileUser && (
+      {user.loggedIn && profileUpdated && profileUser && (
         <ProfileFrame ProfileUser={profileUser} />
       )}
     </div>

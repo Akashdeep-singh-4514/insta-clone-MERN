@@ -8,10 +8,11 @@ import "./ProfileFrame.css";
 import FollowComponent from "./FollowComponent";
 
 function ProfileFrame({ ProfileUser }) {
-  console.log(ProfileUser);
+  // console.log(ProfileUser);
 
   const Navigate = useNavigate();
   const { user } = useUser();
+  const [pfpUrl, setPfpUrl] = useState(ProfileUser.pfp);
   const [token, settoken] = useLocalStorage("instaCloneToken", "");
   const [posts, setposts] = useState([]);
   const [changePFP, setchangePFP] = useState(false);
@@ -77,7 +78,10 @@ function ProfileFrame({ ProfileUser }) {
           notifyError(data.error);
         } else if (data.message) {
           notifySuccess(data.message);
-          window.location.reload();
+          // window.location.reload();
+          setPfpUrl(
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+          );
         }
       })
       .catch((err) => console.log(err));
@@ -120,7 +124,8 @@ function ProfileFrame({ ProfileUser }) {
             notifyError(data.error);
           } else if (data.message) {
             notifySuccess(data.message);
-            window.location.reload();
+            // window.location.reload();
+            setPfpUrl(imageurl);
           }
         })
         .catch((err) => console.log(err));
@@ -150,7 +155,7 @@ function ProfileFrame({ ProfileUser }) {
                 onClick={() => {
                   setchangePFP(!changePFP);
                 }}
-                src={currentuser ? user.pfp : ProfileUser.pfp}
+                src={currentuser ? pfpUrl : ProfileUser.pfp}
                 alt="pfp"
                 className="w-50 thumb-post-img col-lg-12 object-fit-cover   "
               />

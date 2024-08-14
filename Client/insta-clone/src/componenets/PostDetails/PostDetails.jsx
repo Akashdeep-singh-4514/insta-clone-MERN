@@ -30,7 +30,9 @@ function PostDetails({ goback, postId }) {
     const fetchPostDetails = async () => {
       try {
         const response = await fetch(
+          // "https://insta-clone-mern-bakend.onrender.com/getpost",
           "https://insta-clone-mern-bakend.onrender.com/getpost",
+
           {
             method: "POST",
             body: JSON.stringify({ postId }),
