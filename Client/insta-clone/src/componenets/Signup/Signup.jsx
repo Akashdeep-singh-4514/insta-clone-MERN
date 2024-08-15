@@ -158,7 +158,11 @@ export default function Signup({ sethasAccount }) {
                 {<>Signup</>}
               </button>
             )}
-            {loading && <>Loading</>}
+            {loading && (
+              <button className="w-50 bg-info rounded-2 text-dark py-1">
+                {<>loading...</>}
+              </button>
+            )}
 
             <p className="mt-2">
               Already have an account?{" "}
